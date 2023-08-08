@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ClinitalApplication<spring-boot-plateforme-clinital>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.clinital.ClinitalApplication",
+            "projectName": "spring-boot-plateforme-clinital",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
