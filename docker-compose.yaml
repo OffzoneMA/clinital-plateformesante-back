@@ -31,7 +31,7 @@ services:
 
   backend:
     build:
-      context: plateformesante-back
+      context: ./
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -48,42 +48,9 @@ services:
       LETSENCRYPT_EMAIL: support@clinital.io
     networks:
       - backend
-      - frontend
-
-  frontend:
-    build:
-      context: plateformesante-patient
-      dockerfile: Dockerfile
-    restart: always
-    environment:
-      VIRTUAL_HOST: app.clinital.io
-      VIRTUAL_PORT: 3000
-      LETSENCRYPT_HOST: app.clinital.io
-      LETSENCRYPT_EMAIL: support@clinital.io
-    networks:
-      - frontend
-    ports:
-      - 3000:3000
-
-  pro:
-    build:
-      context: plateformesante-pro
-      dockerfile: Dockerfile
-    restart: always
-    environment:
-      VIRTUAL_HOST: pro.clinital.io
-      VIRTUAL_PORT: 3000
-      LETSENCRYPT_HOST: pro.clinital.io
-      LETSENCRYPT_EMAIL: support@clinital.io
-    networks:
-      - frontend
-    ports:
-      - 3001:3000
 
 networks:
   backend:
-  frontend:
-  pro:
 
 volumes:
   db-data:
