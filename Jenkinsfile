@@ -1,11 +1,9 @@
 import jenkins.model.*
-jenkins = Jenkins.instance
 
-node{
+def jenkins = Jenkins.getInstance()
 
-    stage(‘Build’) {
-
-      sh ‘docker-compose -f /var/lib/jenkins/Clinital_pipeline/docker-compose.yml up --build’ 
+node {
+    stage('Build') {
+        sh 'docker-compose -f /var/lib/jenkins/Clinital_pipeline/docker-compose.yml up --build'
     }
-
 }
