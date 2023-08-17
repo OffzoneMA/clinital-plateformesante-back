@@ -24,11 +24,12 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                // Add your test steps here
-            }
+    stage('SonarQube Analysis') {
+        def scannerHome = tool 'SonarScanner';
+        withSonarQubeEnv() {
+          sh "${scannerHome}/bin/sonar-scanner"
         }
+      }
         
         stage('Cleanup') {
             steps {
