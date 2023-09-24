@@ -9,25 +9,39 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class SharingHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id_user", nullable = true, referencedColumnName = "id", insertable = true, updatable = true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Medecin doctor;
+    @JoinColumn(name = "id_patient", nullable = true, referencedColumnName = "id_dossier", insertable = true, updatable = true)
+    private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "document_id")
+    @JoinColumn(name = "id_med", nullable = true, referencedColumnName = "id", insertable = true, updatable = true)
+    private Medecin medecin;
+
+    @ManyToOne
+    @JoinColumn(name = "id_doc", nullable = true, referencedColumnName = "id_doc", insertable = true, updatable = true)
     private Document document;
 
-    private LocalDateTime timestamp;
+    private LocalDateTime dateshare;
 
     // Constructors, getters, and setters
+    public SharingHistory(User user,Medecin medecin,Patient patient,Document document,LocalDateTime dateshare ){
+       this.user=user;
+       this.patient=patient;
+       this.medecin=medecin;
+       this.document=document;
+       this.dateshare=dateshare;
+    }
 }
