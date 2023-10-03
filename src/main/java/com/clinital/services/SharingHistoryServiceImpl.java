@@ -84,30 +84,67 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
         
     }
 
-//     @Override
-//     public void deleteSharingHistory(Long id_share) throws Exception {
-//           try {
-//          SharingHistory shareHistory=sharinghistoryRepository.findById(id_share).orElseThrow(()->new Exception("No sharing exist with this id"));
+    @Override
+    public String deleteSharingHistory(Long id_share) throws Exception {
+          try {
+         SharingHistory shareHistory=sharinghistoryRepository.findById(id_share).orElseThrow(()->new Exception("No sharing exist with this id"));
+         if(sharingHistoryrepository.Deletsharehstory(shareHistory.getId())){
+          return "record has been deleted seccessfully";
+         }else{
+          return "somthing wen wrong !!";
+         }
          
-//        } catch (Exception e) {
-//         // TODO: handle exception
-//         throw new Exception(e.getMessage());
-//        }
+       } catch (Exception e) {
+        // TODO: handle exception
+        throw new Exception(e.getMessage());
+       }
         
         
-//     }
+    }
 
-//     @Override
-//     public List<SharingHistory> findAllSharingHistoryByMedecinId(Long id_medecin) throws Exception {
-//         try {
-//          // TODO Auto-generated method stub
-//        } catch (Exception e) {
-//         // TODO: handle exception
-//         throw new Exception(e.getMessage());
-//        }
-        
-        
-//     }
+    @Override
+    public List<SharingHistory> findAllSharingHistoryByMedecinIdAndPatientId(Long id_medecin, Long id_patient)
+        throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndPatientId'");
+    }
+
+    @Override
+    public List<SharingHistory> findAllSharingHistoryByPatientId(Long id_patient) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByPatientId'");
+    }
+
+    @Override
+    public List<Medecin> findAllSharingHistoryByMedecinId(Long id_med) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingMedecinByPatientId'");
+    }
+
+    @Override
+    public List<SharingHistory> findAllSharingHistoryByMedecinIdAndUserId(Long id_medecin, Long id_User)
+        throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndUserId'");
+    }
+
+    @Override
+    public List<SharingHistory> findAllSharingHistoryByUserId(Long user_id) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByUserId'");
+    }
+
+    @Override
+    public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByDocId'");
+    }
+
+    @Override
+    public SharingHistory findSharingHistoryById(Long id_share) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'findSharingHistoryById'");
+    }
 
 //     @Override
 //     public SharingHistory findSharingHistoryById(Long id_consultation) throws Exception {
