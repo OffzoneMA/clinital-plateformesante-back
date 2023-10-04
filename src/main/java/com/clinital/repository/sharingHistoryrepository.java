@@ -27,16 +27,16 @@ public interface sharingHistoryrepository extends JpaRepository<SharingHistory, 
     @Query(value = "select * from sharing_history where id_patient=?1", nativeQuery = true)
     public List<SharingHistory> findAllSharingHistoryByPatientId(Long id_patient) throws Exception;
 
-    @Query(value = "select m.* from medecins m, sharing_history s where id_med=?1 and id_patient=?2", nativeQuery = true)
-    public List<Medecin> findAllSharingHistoryByMedecinId(Long id_med) throws Exception;
+    @Query(value = "select m.* from medecins m, sharing_history s where m.id=s.id_med and  id_med=?1 and id_patient=?2", nativeQuery = true)
+    public List<Medecin> findAllSharingHistoryByMedecinId(Long id_med,long id_patient) throws Exception;
 
-    @Query(value = "", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_med=?1 and s.id_user=?2", nativeQuery = true)
     public List<SharingHistory> findAllSharingHistoryByMedecinIdAndUserId(Long id_medecin,Long id_User) throws Exception;
 
-    @Query(value = "", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_user=?1", nativeQuery = true)
     public List<SharingHistory> findAllSharingHistoryByUserId(Long user_id) throws Exception;
 
-    @Query(value = "", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_doc=?1", nativeQuery = true)
     public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception;
     
 }
