@@ -6,10 +6,7 @@ docker-compose up -d --build
 
 sleep 1m
 
-docker network connect app platformesante-backend-1
-docker network connect app platformesante-frontend-1
-docker network connect app platformesante-pro-1
-
+docker network connect app clinital-plateformesante-back-backend-1
 
 sleep 1m
 
