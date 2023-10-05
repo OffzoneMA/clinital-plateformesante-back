@@ -1,6 +1,7 @@
 package com.clinital.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -105,78 +106,113 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
     @Override
     public List<SharingHistory> findAllSharingHistoryByMedecinIdAndPatientId(Long id_medecin, Long id_patient)
         throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndPatientId'");
+          try {
+          Patient patient=patientrepo.findById(id_patient).orElseThrow(()->new Exception("No matchinf Found for this Patient ID"));
+          Medecin medecin=medecinRepository.findById(id_patient).orElseThrow(()->new Exception("No matchinf Found for this Medecin ID"));
+
+          List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByMedecinIdAndPatientId(medecin.getId(), patient.getId())
+          .stream()
+          .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
+          return shares;
+          
+            
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
 
     @Override
     public List<SharingHistory> findAllSharingHistoryByPatientId(Long id_patient) throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByPatientId'");
+    try {
+          Patient patient=patientrepo.findById(id_patient).orElseThrow(()->new Exception("No matchinf Found for this Patient ID"));
+          List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByPatientId(patient.getId())
+          .stream()
+          .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
+          return shares;
+            
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
 
     @Override
-    public List<Medecin> findAllSharingHistoryByMedecinId(Long id_med) throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingMedecinByPatientId'");
+    public List<Medecin> findAllSharingHistoryByMedecinId(Long id_med,Long id_patient) throws Exception {
+        try {
+          Patient patient=patientrepo.findById(id_patient).orElseThrow(()->new Exception("No matchinf Found for this Patient ID"));
+          Medecin medecin=medecinRepository.findById(id_med).orElseThrow(()->new Exception("No matchinf Found for this Medecin ID"));
+          List<Medecin> medecins=sharinghistoryRepository.findAllSharingHistoryByMedecinId(medecin.getId(), patient.getId())
+          .stream()
+          .map(med->mapper.map(med, Medecin.class)).collect(Collectors.toList());
+          return medecins;     
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
 
     @Override
-    public List<SharingHistory> findAllSharingHistoryByMedecinIdAndUserId(Long id_medecin, Long id_User)
+    public List<SharingHistory> findAllSharingHistoryByMedecinIdAndUserId(Long id_medecin)
         throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndUserId'");
-    }
+     try {
+         
+          Medecin medecin=medecinRepository.findById(id_medecin).orElseThrow(()->new Exception("No matchinf Found for this Medecin ID"));
+         List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByMedecinIdAndUserId(medecin.getId(),globalVariables.getConnectedUser().getId())
+          .stream()
+          .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
+          return shares;     
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
+     
+        }
 
     @Override
-    public List<SharingHistory> findAllSharingHistoryByUserId(Long user_id) throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByUserId'");
+    public ResponseEntity<?> findAllSharingHistoryByUserId(Long user_id) throws Exception {
+   try {
+         
+         
+         List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByUserId(globalVariables.getConnectedUser().getId())
+          .stream()
+          .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
+          if(shares.isEmpty()){
+            return ResponseEntity.ok("Your history is empty");
+          }
+          return ResponseEntity.ok(shares);     
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
 
     @Override
     public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByDocId'");
+    try {
+         
+          Document document=docrepo.findById(id_document).orElseThrow(()->new Exception("No matchinf Found for this Document ID"));
+         List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByDocId(document.getId_doc())
+          .stream()
+          .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
+          return shares;     
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
 
     @Override
     public SharingHistory findSharingHistoryById(Long id_share) throws Exception {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'findSharingHistoryById'");
+      try {
+         
+          SharingHistory share=sharinghistoryRepository.findById(id_share).orElseThrow(()->new Exception("No matchinf Found for this History sharing ID"));
+          return share;     
+          } catch (Exception e) {
+            // TODO: handle exception 
+            throw new Exception(e.getMessage());
+          }
     }
-
-//     @Override
-//     public SharingHistory findSharingHistoryById(Long id_consultation) throws Exception {
-//          try {
-//          // TODO Auto-generated method stub
-//        } catch (Exception e) {
-//         // TODO: handle exception
-//         throw new Exception(e.getMessage());
-//        }
-        
-
-//     }
-
-//     @Override
-//     public List<SharingHistory> findAllSharingHistoryByMedecinIdAndPatientId(Long id_medecin, Long id_patient)
-//         throws Exception {
-//       // TODO Auto-generated method stub
-//       throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndPatientId'");
-//     }
-
-//     @Override
-//     public List<SharingHistory> findAllSharingHistoryByMedecinIdAndUserId(Long id_medecin, Long id_User)
-//         throws Exception {
-//       // TODO Auto-generated method stub
-//       throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByMedecinIdAndUserId'");
-//     }
-
-//     @Override
-//     public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception {
-//       // TODO Auto-generated method stub
-//       throw new UnsupportedOperationException("Unimplemented method 'findAllSharingHistoryByDocId'");
-//     }
 
 
     
