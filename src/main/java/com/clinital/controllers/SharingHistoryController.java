@@ -56,10 +56,10 @@ public class SharingHistoryController {
     }
 
     // get history of sharing of a document.
-    @GetMapping("/documents/{iddoc}")
+    @GetMapping("/dossiers/{iddoss}")
     @ResponseBody
-    public ResponseEntity<?> documentSharingHistory(@PathVariable("iddoc") Long iddoc) throws Exception{
-        return ResponseEntity.ok(shareservices.findAllSharingHistoryByDocId(iddoc));
+    public ResponseEntity<?> documentSharingHistory(@PathVariable("iddoss") Long iddoss) throws Exception{
+        return ResponseEntity.ok(shareservices.findAllSharingHistoryByDocId(iddoss));
     }
 
     // get history of sharing of a document between current user and Medecin.

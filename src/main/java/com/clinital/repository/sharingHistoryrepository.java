@@ -36,7 +36,7 @@ public interface sharingHistoryrepository extends JpaRepository<SharingHistory, 
     @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_user=?1", nativeQuery = true)
     public List<SharingHistory> findAllSharingHistoryByUserId(Long user_id) throws Exception;
 
-    @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_doc=?1", nativeQuery = true)
-    public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception;
+    @Query(value = "SELECT s.* FROM `sharing_history` s WHERE s.id_dossier=?1", nativeQuery = true)
+    public List<SharingHistory> findAllSharingHistoryByDossierId(Long id_dossier) throws Exception;
     
 }

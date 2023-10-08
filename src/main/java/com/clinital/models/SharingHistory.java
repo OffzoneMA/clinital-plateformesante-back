@@ -31,17 +31,17 @@ public class SharingHistory {
     private Medecin medecin;
 
     @ManyToOne
-    @JoinColumn(name = "id_doc", nullable = true, referencedColumnName = "id_doc", insertable = true, updatable = true)
-    private Document document;
+    @JoinColumn(name = "id_dossier", nullable = true, referencedColumnName = "id_dossier", insertable = true, updatable = true)
+    private DossierMedical dossierMedical;
 
     private LocalDateTime dateshare;
 
     // Constructors, getters, and setters
-    public SharingHistory(User user,Medecin medecin,Patient patient,Document document,LocalDateTime dateshare ){
+    public SharingHistory(User user,Medecin medecin,Patient patient,DossierMedical dossierMedical,LocalDateTime dateshare ){
        this.user=user;
        this.patient=patient;
        this.medecin=medecin;
-       this.document=document;
+       this.dossierMedical=dossierMedical;
        this.dateshare=dateshare;
     }
 }
