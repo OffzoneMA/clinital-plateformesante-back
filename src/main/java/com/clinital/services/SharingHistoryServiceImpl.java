@@ -1,5 +1,7 @@
 package com.clinital.services;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.clinital.dto.SharingHistoryDTO;
 import com.clinital.models.Document;
+import com.clinital.models.DossierMedical;
 import com.clinital.models.Medecin;
 import com.clinital.models.Patient;
 import com.clinital.models.SharingHistory;
 import com.clinital.models.User;
 import com.clinital.payload.request.SharingHistoryRequest;
 import com.clinital.repository.DocumentRepository;
+import com.clinital.repository.DossierMedicalRepository;
 import com.clinital.repository.MedecinRepository;
 import com.clinital.repository.PatientRepository;
 import com.clinital.repository.UserRepository;
@@ -34,7 +38,7 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
     @Autowired
     public PatientRepository patientrepo;
     @Autowired
-    public DocumentRepository docrepo;
+    public DossierMedicalRepository dossrepo;
     @Autowired
     GlobalVariables globalVariables;
     @Autowired
@@ -46,10 +50,10 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
        try {
          // TODO Auto-generated method stub
          Medecin medecin=medecinRepository.findById(SharingHistory.getMedecin()).orElseThrow(()->new Exception("No Medecin exist with this id"));
-         Patient patient=patientrepo.findById(SharingHistory.getPatient()).orElseThrow(()->new Exception("No Medecin exist with this id"));
-         Document document=docrepo.findById(SharingHistory.getDocument()).orElseThrow(()->new Exception("No Medecin exist with this id"));
+         Patient patient=patientrepo.findById(SharingHistory.getPatient()).orElseThrow(()->new Exception("No Patient exist with this id"));
+         DossierMedical dossierMedical=dossrepo.findById(SharingHistory.getDossier()).orElseThrow(()->new Exception("No Folder exist with this id"));
          User currentUser=globalVariables.getConnectedUser();
-         SharingHistory newshare=new SharingHistory(currentUser, medecin, patient, document, SharingHistory.getSharingdate());
+         SharingHistory newshare=new SharingHistory(currentUser, medecin, patient, dossierMedical, LocalDateTime.now());
          sharinghistoryRepository.save(newshare);
          return newshare;
        } catch (Exception e) {
@@ -67,11 +71,11 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
           SharingHistory shareHistory=sharinghistoryRepository.findById(SharingHistory.getId()).orElseThrow(()->new Exception("No sharing exist with this id"));
           Medecin medecin=medecinRepository.findById(SharingHistory.getMedecin()).orElseThrow(()->new Exception("No Medecin exist with this id"));
          Patient patient=patientrepo.findById(SharingHistory.getPatient()).orElseThrow(()->new Exception("No Patient exist with this id"));
-         Document document=docrepo.findById(SharingHistory.getDocument()).orElseThrow(()->new Exception("No Document exist with this id"));
+         DossierMedical dossierMedical=dossrepo.findById(SharingHistory.getDossier()).orElseThrow(()->new Exception("No Folder exist with this id"));
          User currentUser=globalVariables.getConnectedUser();
          shareHistory.setMedecin(medecin);
          shareHistory.setPatient(patient);
-         shareHistory.setDocument(document);
+         shareHistory.setDossierMedical(dossierMedical);
          shareHistory.setUser(currentUser);
          shareHistory.setDateshare(SharingHistory.getSharingdate());
          sharinghistoryRepository.save(shareHistory);
@@ -188,11 +192,11 @@ public class SharingHistoryServiceImpl implements SharingHistoryService {
     }
 
     @Override
-    public List<SharingHistory> findAllSharingHistoryByDocId(Long id_document) throws Exception {
+    public List<SharingHistory> findAllSharingHistoryByDocId(Long id_doss) throws Exception {
     try {
          
-          Document document=docrepo.findById(id_document).orElseThrow(()->new Exception("No matchinf Found for this Document ID"));
-         List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByDocId(document.getId_doc())
+        DossierMedical dossierMedical=dossrepo.findById(id_doss).orElseThrow(()->new Exception("No Folder exist with this id"));
+         List<SharingHistory> shares=sharinghistoryRepository.findAllSharingHistoryByDossierId(dossierMedical.getId_dossier())
           .stream()
           .map(share->mapper.map(share, SharingHistory.class)).collect(Collectors.toList());
           return shares;     
