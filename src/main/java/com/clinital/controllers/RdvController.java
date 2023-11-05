@@ -322,7 +322,7 @@ public class RdvController {
 			Patient patient = patientRepo.findById(c.getPatientid()).orElseThrow(
 					() -> new BadRequestException("Patient not found for this id :: " +
 							c.getPatientid()));
-
+							System.out.println("USer 1: "+globalVariables.getConnectedUser());
 			return ResponseEntity.ok(rdvservice.AddnewRdv(globalVariables.getConnectedUser(), c, medecin, patient));
 
 		} catch (Exception e) {

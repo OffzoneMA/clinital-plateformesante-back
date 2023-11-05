@@ -94,11 +94,12 @@ public class Rendezvous {
 	// @JoinColumn(name = "medecin_schedule_id", nullable = false, referencedColumnName = "id", insertable = true, updatable = true)
 	// private MedecinSchedule medecinSchedule;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
+
 	@JoinColumn(name = "id_mode", referencedColumnName= "id_mode")
 	private ModeConsultation modeConsultation;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_motif", referencedColumnName= "id_motif")
 	private MotifConsultation motifConsultation;
 

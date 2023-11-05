@@ -36,7 +36,7 @@ public class RendezvousDTO {
 	private LocalDateTime canceledat;
 	@Enumerated(EnumType.STRING)
 	private RdvStatutEnum statut;
-	private long modeconsultation;
+	private Long modeconsultation;
 	private Long medecinid;
 	private long patientid;
 	private Boolean isnewpatient;
