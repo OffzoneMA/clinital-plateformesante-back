@@ -144,9 +144,10 @@ public class AuthController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		// List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 		// 		.collect(Collectors.toList());
-		globalVariables.setConnectedUser();
+		
 
 		User user = userRepository.findById(userDetails.getId()).get();
+		globalVariables.setConnectedUser(user);
 		System.out.println(".()"+user.getEmail());
 		if(userDetails.isEnabled()==false){
 			return ResponseEntity.ok("Your Account is Blocked please try to Contact Clinital Admin");
