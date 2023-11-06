@@ -55,7 +55,8 @@ public class UserDetailsImpl implements UserDetails {
 				user.getEmail(),
 				user.getTelephone(),
 				user.getPassword()
-				, user.getRole(),user.isEnabled());
+				, user.getRole(),
+				user.isEnabled());
 				
 	}
 

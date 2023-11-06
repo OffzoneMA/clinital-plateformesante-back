@@ -22,10 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
-		if (user == null) {
-            throw new UsernameNotFoundException(email);
-        }
+		User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + email));
 		//show 
         if (user.isEnabled()==false) {
             throw new BadCredentialsException("Compte bloqué, Merci de contacter le support");

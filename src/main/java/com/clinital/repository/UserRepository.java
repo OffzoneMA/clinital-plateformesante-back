@@ -10,9 +10,9 @@ import com.clinital.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-//	Optional<User> findByUsername(String email);
-//
-//	Boolean existsByUsername(String email);
+	// Optional<User> findByUsername(String email);
+
+	// Boolean existsByUsername(String email);
 
 	Boolean existsByEmail(String email);
 	Optional<User> findUserByEmail(String email);
