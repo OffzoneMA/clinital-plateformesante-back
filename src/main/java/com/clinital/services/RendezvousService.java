@@ -270,7 +270,6 @@ public List<Rendezvous> getRdvPatientByDayWeek(long day,long id){
 	
 	if (!isReserved||ModeMedecin) {
 		// DayOfWeek day = DayOfWeek.valueOf(c.getDay());
-		System.err.println(user.getEmail());
 		ModeConsultation mode = moderespo.getById(c.getModeconsultation());
 		MotifConsultation motif =mRepository.getById(c.getMotif());
 		Cabinet cabinet=cabrepo.getById(c.getCabinet());
