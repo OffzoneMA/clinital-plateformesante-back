@@ -273,6 +273,10 @@ public List<Rendezvous> getRdvPatientByDayWeek(long day,long id){
 	
 	if (!isReserved||ModeMedecin) {
 
+		// DayOfWeek day = DayOfWeek.valueOf(c.getDay());
+		ModeConsultation mode = moderespo.getById(c.getModeconsultation());
+		MotifConsultation motif =mRepository.getById(c.getMotif());
+		Cabinet cabinet=cabrepo.getById(c.getCabinet());
 		Rendezvous rendezvous = new Rendezvous();
 		rendezvous.setMedecin(medecin);
 		rendezvous.setMotifConsultation(motif);
