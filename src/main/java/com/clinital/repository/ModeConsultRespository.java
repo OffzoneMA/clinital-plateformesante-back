@@ -9,6 +9,6 @@ import com.clinital.models.ModeConsultation;
 @Repository
 public interface ModeConsultRespository extends JpaRepository<ModeConsultation,Long> {
 
-    @Query(value ="SELECT * FROM mode_consultation WHERE id = :id",nativeQuery = true)
+    @Query(value ="SELECT * FROM mode_consultation WHERE id_mode = :id",nativeQuery = true)
 	ModeConsultation getById(Long id); 
 }

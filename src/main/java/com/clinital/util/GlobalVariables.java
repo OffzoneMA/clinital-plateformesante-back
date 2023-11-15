@@ -17,7 +17,10 @@ public class GlobalVariables {
    
 
     public User getConnectedUser() {
-        return user;
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
+        this.user = userRepository.getById(userDetails.getId());
+        return this.user;
     }
 
     public void setConnectedUser() {

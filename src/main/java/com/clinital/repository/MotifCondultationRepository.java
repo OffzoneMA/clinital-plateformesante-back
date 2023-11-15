@@ -9,6 +9,6 @@ import com.clinital.models.MotifConsultation;
 public interface MotifCondultationRepository extends JpaRepository<MotifConsultation,Long> {
     
 
-    @Query(value ="SELECT * FROM motifs_consultation WHERE id = :id",nativeQuery = true)
+    @Query(value ="SELECT * FROM motifs_consultation WHERE id_motif = :id",nativeQuery = true)
 	MotifConsultation getById(Long id); 
 }

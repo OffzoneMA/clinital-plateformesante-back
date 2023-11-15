@@ -40,7 +40,7 @@ public interface CabinetRepository extends JpaRepository<Cabinet, Long>{
 	@Query(value = "UPDATE `cabinet` SET state=?1 WHERE id_cabinet=?2",nativeQuery = true)
 	public void setCabinetSTate(boolean isActive,Long idcabinet);
 
-    @Query(value ="SELECT * FROM cabinet WHERE id = :id",nativeQuery = true)
+    @Query(value ="SELECT * FROM cabinet WHERE id_cabinet = :id",nativeQuery = true)
 	Cabinet getById(Long id);
 
 
