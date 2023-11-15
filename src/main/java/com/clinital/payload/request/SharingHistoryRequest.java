@@ -17,7 +17,7 @@ public class SharingHistoryRequest {
     @NotBlank
     long medecin;
     @NotBlank
-    long document;
+    long dossier;
     @NotBlank
     LocalDateTime sharingdate;
 }

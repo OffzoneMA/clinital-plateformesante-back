@@ -466,9 +466,9 @@ INSERT INTO `users` (`id`, `creation_date_time`, `email`, `email_verified`, `is_
 (8, '2022-08-09 13:26:44.635000', 'secretaire@gmail.com', b'1', b'1', NULL, '$2a$10$17PkY7Bh/n1lGoNONK554eVFF7dDRlv1QfgrUi9x94HbyZi/qHZAK', 'LOCAL', 'ROLE_SECRETAIRE', 'string');
 
 INSERT INTO `medecins` (`id`, `steps_validation`, `civilite_med`, `contact_urgence_med`, `description_med`, `inpe`, `is_active`, `matricule_med`, `nom_med`, `photo_couverture_med`, `photo_med`, `prenom_med`, `specialite_id_spec`, `user_id`, `ville_id_ville`) VALUES 
-(1,1, 'Mr', '0535604770', NULL, '141060053',NULL, '51531515', 'BIJJOU', NULL, NULL, 'ABBAS',1, 2, 58),
-(2,1, 'Mr', '0535721174', NULL,  '141188516',NULL, '85468416', 'HOUNAOUI', NULL, NULL, 'ABDALLAH ',1, 4, 58),  
-(3,1,'Mr', '0535618216', NULL,  '141245316',NULL, '351486', 'MOURABITI', NULL, NULL, 'ABDELAALI YAHYA',1, 5, 58);
+(1,1, 'Mr', '0535604770', NULL, '141060053',1, '51531515', 'BIJJOU', NULL, NULL, 'ABBAS',1, 2, 58),
+(2,1, 'Mr', '0535721174', NULL,  '141188516',1, '85468416', 'HOUNAOUI', NULL, NULL, 'ABDALLAH ',1, 4, 58),  
+(3,1,'Mr', '0535618216', NULL,  '141245316',1, '351486', 'MOURABITI', NULL, NULL, 'ABDELAALI YAHYA',1, 5, 58);
 
 INSERT INTO `moyenspaiement` (`id_mp`, `type`) VALUES
 (1, 'Cash'),

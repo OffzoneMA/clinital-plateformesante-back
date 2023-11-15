@@ -151,6 +151,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/api/typeConsultation/getTypeConsultationById/**").permitAll()
                         .antMatchers(AUTH_WHITELIST).permitAll()
                         .antMatchers("/api/users/**").hasAnyRole("PATIENT", "ADMIN", "SECRETAIRE", "MEDECIN")
+						.antMatchers("/api/shares/**").hasAnyRole("PATIENT", "ADMIN", "SECRETAIRE", "MEDECIN")
                         .antMatchers("/api/patient/**").hasAnyRole("PATIENT", "ADMIN")
                         .antMatchers("/api/med/**").hasAnyRole("MEDECIN", "ADMIN")
                         .antMatchers("/api/med/antecedent/**").hasAnyRole("MEDECIN", "ADMIN")

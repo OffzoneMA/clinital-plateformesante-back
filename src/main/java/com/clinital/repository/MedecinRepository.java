@@ -40,7 +40,7 @@ public interface MedecinRepository extends JpaRepository<Medecin, Long> {
 	@Query(value ="SELECT * FROM medecins WHERE id = ?1",nativeQuery = true)
 	Medecin getById(Long id);
 	
-	@Query(value = "SELECT m.* FROM medecins m, Specialites s , Ville v WHERE s.id_spec = m.specialite_id_spec "
+	@Query(value = "SELECT m.* FROM medecins m, Specialites s , villes v WHERE s.id_spec = m.specialite_id_spec "
 			+ " AND m.ville_id_ville = v.id_ville AND m.is_active = 1  AND m.ville.nom_ville = '?2'"
 			+ " AND ( s.libelle LIKE ?1% OR m.nom_med LIKE ?1% )", nativeQuery = true)
 	List<Medecin> getMedecinBySpecialiteOrName(String search, String ville);
@@ -48,7 +48,7 @@ public interface MedecinRepository extends JpaRepository<Medecin, Long> {
 	@Query(value = "SELECT m.* FROM medecins m, Specialites s , villes v WHERE s.id_spec = m.specialite_id_spec AND m.ville_id_ville = v.id_ville AND m.is_active = 1  AND m.ville_id_ville = 57 AND ( s.libelle LIKE ?1%  OR m.nom_med LIKE ?2% )", nativeQuery = true)
 	List<Medecin> getMedecinBySpecialiteOrNameAndVille(String ville,String search);
 	
-	@Query(value = "SELECT m.* FROM medecins m, Ville v WHERE m.ville_id_ville = v.id_ville AND m.ville_id_ville = ?1 AND m.is_active = 1", nativeQuery = true)
+	@Query(value = "SELECT m.* FROM medecins m, villes v WHERE m.ville_id_ville = v.id_ville AND m.ville_id_ville = ?1 AND m.is_active = 1", nativeQuery = true)
 	List<Medecin> getMedecinByVille(Long id_ville);
 
 	@Query(value = "SELECT m.* FROM medecins m, Specialites s WHERE s.id_spec = m.specialite_id_spec"
