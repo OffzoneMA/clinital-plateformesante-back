@@ -17,15 +17,15 @@ public class GlobalVariables {
    
 
     public User getConnectedUser() {
+
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
         this.user = userRepository.getById(userDetails.getId());
         return this.user;
+
     }
 
-    public void setConnectedUser() {
-        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
-        .getPrincipal();
-        this.user = userRepository.getById(userDetails.getId());
+    public void setConnectedUser(User user) {
+       this.user=user;
     }
 }

@@ -25,18 +25,12 @@ public class RendezvousDTO {
 
 	private Long id;
 	private DayOfWeek Day;
-	// @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
-	// @JsonSerialize(using = LocalDateTimeSerializer.class)
-	// @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime start;
-	// @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
-	// @JsonSerialize(using = LocalDateTimeSerializer.class)
-	// @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime end;
 	private LocalDateTime canceledat;
 	@Enumerated(EnumType.STRING)
 	private RdvStatutEnum statut;
-	private long modeconsultation;
+	private Long modeconsultation;
 	private Long medecinid;
 	private long patientid;
 	private Boolean isnewpatient;

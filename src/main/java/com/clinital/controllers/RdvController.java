@@ -310,19 +310,18 @@ public class RdvController {
 	@PostMapping("/patient/addRdv")
 	@ResponseBody
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	public ResponseEntity<?> addRendezvousByPatient(@RequestBody RendezvousDTO c)
+	public ResponseEntity<?> addRendezvousByPatient(@Valid @RequestBody RendezvousDTO c)
 			throws Exception {
 
 		try {
-			// UserDetailsImpl userDetails = (UserDetailsImpl)
-			// SecurityContextHolder.getContext().getAuthentication()
-			// .getPrincipal();
+			
+			System.err.println(c);
 			Medecin medecin = medRepo.findById(c.getMedecinid())
 					.orElseThrow(() -> new BadRequestException("Medecin not found for this id ::" + c.getMedecinid()));
 			Patient patient = patientRepo.findById(c.getPatientid()).orElseThrow(
 					() -> new BadRequestException("Patient not found for this id :: " +
 							c.getPatientid()));
-			System.err.println(globalVariables.getConnectedUser().getEmail());
+
 			return ResponseEntity.ok(rdvservice.AddnewRdv(globalVariables.getConnectedUser(), c, medecin, patient));
 
 		} catch (Exception e) {

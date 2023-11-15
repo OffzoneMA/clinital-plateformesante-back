@@ -46,16 +46,22 @@ public class ActivityServices implements historyservices {
     //     activityRespository.save(o);
     // }
     
-    public void createActivity(Date TimeActivity, String typeActivity, String description, User user) {
+    public <T> void createActivity(Date timeActivity, String typeActivity, String description, T user) {
         LogActivityUser activity = new LogActivityUser();
-        activity.setTimeActivity(TimeActivity);
+        activity.setTimeActivity(timeActivity);
         activity.setTypeActivity(typeActivity);
         activity.setDescription(description);
-        activity.setUser(user);
+    
+        // Set the user if it's not null
+        if (user != null) {
+            if (user instanceof User) {
+                activity.setUser((User) user);
+            }
+        }
+    
         activityRespository.save(activity);
-
-        
     }
+    
 
 
     // @Override
