@@ -261,8 +261,7 @@ public List<Rendezvous> getRdvPatientByDayWeek(long day,long id){
 	// Add RDV :
 	 public ResponseEntity<?> AddnewRdv(User user,RendezvousDTO c,Medecin medecin,Patient patient) throws Exception{
 		
-		try {
-			System.out.println("USer 2: "+user.getEmail());		
+		try {	
 		// DayOfWeek day = DayOfWeek.valueOf(c.getDay());
 	MotifConsultation motif = mRepository.findById(c.getCabinet()).orElseThrow(()->new Exception("No such Id exist for a Motif"));
 	ModeConsultation mode =moderespo.findById(c.getCabinet()).orElseThrow(()->new Exception("No such Id exist for a Mode consultation"));
@@ -274,9 +273,6 @@ public List<Rendezvous> getRdvPatientByDayWeek(long day,long id){
 	if (!isReserved||ModeMedecin) {
 
 		// DayOfWeek day = DayOfWeek.valueOf(c.getDay());
-		ModeConsultation mode = moderespo.getById(c.getModeconsultation());
-		MotifConsultation motif =mRepository.getById(c.getMotif());
-		Cabinet cabinet=cabrepo.getById(c.getCabinet());
 		Rendezvous rendezvous = new Rendezvous();
 		rendezvous.setMedecin(medecin);
 		rendezvous.setMotifConsultation(motif);
