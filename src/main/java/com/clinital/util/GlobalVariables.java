@@ -16,13 +16,17 @@ public class GlobalVariables {
 
    
 
-    public User getConnectedUser() {
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
-        .getPrincipal();
-        this.user = userRepository.getById(userDetails.getId());
-        return this.user;
-
+    public User  getConnectedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetailsImpl) {
+            UserDetailsImpl userDetails = (UserDetailsImpl) principal;
+            this.user = userRepository.getById(userDetails.getId());
+            return this.user;
+        } else {
+            // Handle the case when the principal is not UserDetailsImpl
+            // Maybe throw an exception or return null
+            return null;
+        }
     }
 
     public void setConnectedUser(User user) {

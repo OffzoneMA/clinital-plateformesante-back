@@ -53,7 +53,7 @@ public class VilleController {
 	
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","LOADING All cities ",globalVariables.getConnectedUser());
-		LOGGER.info("loading all villes "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("loading all villes "+ (globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return villerepo.findAll().stream().map(ville -> mapper.map(ville, VilleDTO.class))
 				.collect(Collectors.toList());
