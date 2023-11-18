@@ -130,11 +130,11 @@ try {
 				cabinetrepo.save(cabinet);
 				
 					activityServices.createActivity(new Date(),"Add","Add New Medecin By Medecin Admin to cabinet ID :"+cabinet.getId_cabinet(),globalVariables.getConnectedUser());
-					LOGGER.info("Add New Medecin By Medecin Admin to cabinet ID :"+cabinet.getId_cabinet()+" by User : "+globalVariables.getConnectedUser().getId());
+					LOGGER.info("Add New Medecin By Medecin Admin to cabinet ID :"+cabinet.getId_cabinet()+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				
 				return clinitalModelMapper.map(medecin, MedecinDTO.class);
 	} else 
-	LOGGER.info("You are not Allowed to add new Medecin, User : "+globalVariables.getConnectedUser().getId());
+	LOGGER.info("You are not Allowed to add new Medecin, User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 	throw new Exception("Your are not Allowed");
 	
 } catch (Exception e) {
@@ -171,7 +171,7 @@ try {
 				medecin.setIsActive(false);
 				medecinRepository.save(medecin);
 				activityServices.createActivity(new Date(),"Update","Update Medecin  ID : "+id,globalVariables.getConnectedUser());
-				LOGGER.info("Update Medecin ID : "+id+" by User : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Update Medecin ID : "+id+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return clinitalModelMapper.map(medecin, MedecinDTO.class);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -193,7 +193,7 @@ try {
 		Medecin med = medecinRepository.findbyid(id).orElseThrow(() -> new Exception("Medecin not found"));
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By ID : "+id,globalVariables.getConnectedUser());
-			LOGGER.info("Consult Medecin By ID : "+id+" by User : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consult Medecin By ID : "+id+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}else{
 			LOGGER.info("Consult Medecin By ID : "+id);
 		}
@@ -438,7 +438,7 @@ public Boolean isAccessibleFolder(Long iddoss) throws Exception{
 		DossierMedical dossierMedical=dossierrepo.findById(iddoss).orElseThrow(()->new Exception("No Matching Found"));
 		Boolean isDosMedical = medecin.getMeddossiers().stream().filter(dossier->dossier.getId_dossier()==dossierMedical.getId_dossier()).findFirst().isPresent();
 			activityServices.createActivity(new Date(),"Read","Checking if has right to accessto this Folder ID : "+dossierMedical.getId_dossier(),globalVariables.getConnectedUser());
-			LOGGER.info("Checking if has right to access to this Folder ID : "+dossierMedical.getId_dossier()+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Checking if has right to access to this Folder ID : "+dossierMedical.getId_dossier()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return isDosMedical;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -455,7 +455,7 @@ public ResponseEntity<Medecin> Myvisibity(Medecin med)throws Exception{
 	try{
 		med.setIsActive(!med.getIsActive());
 		activityServices.createActivity(new Date(),"Update","Chaning Visibilty of Account to :"+!med.getIsActive(),globalVariables.getConnectedUser());
-			LOGGER.info("Chaning Visibilty of Account to :"+!med.getIsActive()+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Chaning Visibilty of Account to :"+!med.getIsActive()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(med);
 	}
 	catch(Exception e){

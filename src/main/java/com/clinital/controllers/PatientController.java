@@ -123,7 +123,7 @@ public class PatientController {
 	public PatientResponse findPatientByAccount(@PathVariable("account") Long userID) throws Exception {
 
 		activityServices.createActivity(new Date(),"Read","Consulting Info of Patient ID : "+userID,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Info of Patient ID : "+userID+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting Info of Patient ID : "+userID+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return mapper.map(patientRepo.findPatientByAccount(userID), PatientResponse.class);
 	}
 
@@ -131,7 +131,7 @@ public class PatientController {
 	@ResponseBody
 	public List<PatientResponse> findPatientByType(@PathVariable PatientTypeEnum type) {
 		activityServices.createActivity(new Date(),"Read","Consulting All Patient by type : "+type,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Patient by type : "+type+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Patient by type : "+type+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		
 		return patientRepo.findPatientByType(type).stream().map(pat -> mapper.map(pat, PatientResponse.class))
 				.collect(Collectors.toList());
@@ -161,7 +161,7 @@ public class PatientController {
 			patientEntity.setPatientEmail(patient.getEmail());
 			Patient pat = patientService.create(patientEntity);
 			activityServices.createActivity(new Date(),"Add","Add New Patient ID : "+pat.getId(),globalVariables.getConnectedUser());
-		LOGGER.info("Add New Patient ID : "+pat.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Add New Patient ID : "+pat.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(mapper.map(pat, Patient.class));
 
 		} else
@@ -181,11 +181,11 @@ public class PatientController {
 			if (pt.getPatient_type() == PatientTypeEnum.PROCHE) {
 				patientService.delete(pt);
 				activityServices.createActivity(new Date(),"Delete","Delete Patient ID : "+pt.getId(),globalVariables.getConnectedUser());
-				LOGGER.info("Delete Patient by ID : "+pt.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Delete Patient by ID : "+pt.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				response.put("deleted", Boolean.TRUE);
 			} else {
 				activityServices.createActivity(new Date(),"Add","Cannot Delete Patient ID : "+pt.getId(),globalVariables.getConnectedUser());
-				LOGGER.error("Cannot Patient ID : "+pt.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.error("Cannot Patient ID : "+pt.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				response.put("NOt authorized to delete Your self now", Boolean.FALSE);
 			}
 
@@ -225,7 +225,7 @@ public class PatientController {
 
 				Patient updatedpt = patientRepo.save(pt);
 				activityServices.createActivity(new Date(),"Update","Update Patient ID : "+pt.getId(),globalVariables.getConnectedUser());
-				LOGGER.info("Update Patient ID : "+pt.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Update Patient ID : "+pt.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				return ResponseEntity.ok(mapper.map(updatedpt, PatientResponse.class));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -255,7 +255,7 @@ public class PatientController {
 		Patient patient = patientService.getPatientMoiByUserId(globalVariables.getConnectedUser().getId());
 
 		activityServices.createActivity(new Date(),"Read","Consulting personal Patient Account : "+patient.getId(),globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Personal Patient Account ID : "+patient.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting Personal Patient Account ID : "+patient.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
 		return ResponseEntity.ok(mapper.map(patient, PatientResponse.class));
 
@@ -279,11 +279,11 @@ public class PatientController {
 		Boolean patient = patientRepo.existsById(idpat);
 		if (patient && idpat!=patientUser.getId()) {
 			activityServices.createActivity(new Date(),"Read","Cosnulting Proch Patient ID : "+idpat,globalVariables.getConnectedUser());
-			LOGGER.info("Consulting Proch Patient ID  : "+idpat+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consulting Proch Patient ID  : "+idpat+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(patientService.findProchByUserId(globalVariables.getConnectedUser().getId(), idpat));
 		} else
 		activityServices.createActivity(new Date(),"Read","Cant consult this Account : "+idpat,globalVariables.getConnectedUser());
-		LOGGER.warn("Cant Consult this Account ID : "+idpat+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.warn("Cant Consult this Account ID : "+idpat+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(new ApiResponse(false, "Pas de Patient avec ce id :: " + idpat));
 
 	}
@@ -302,7 +302,7 @@ public class PatientController {
 
 		
 		activityServices.createActivity(new Date(),"Read","Consulting All Proch Account",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Proch Account, UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Proch Account, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(patientService.findALLProchByUserId(globalVariables.getConnectedUser().getId()));
 
 	}
@@ -320,7 +320,7 @@ public class PatientController {
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
 		activityServices.createActivity(new Date(),"Read","Consulting All Patient Account",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Patient Account, UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Patient Account, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return patientService.findALLPatientByUserId(globalVariables.getConnectedUser().getId());
 
 	}
@@ -391,7 +391,7 @@ public class PatientController {
 		Patient patient=patientRepo.findPatientByUserIdandDossMedicale(globalVariables.getConnectedUser().getId(),iddossier).orElseThrow(()->new Exception("NO MATCHING FOUND FOR THAT USER !"));
 
 		activityServices.createActivity(new Date(),"Update","Sharing Medical Folder ID : "+iddossier+" with Medecin : "+idmed,globalVariables.getConnectedUser());
-		LOGGER.info("Sharing Medical Folder ID : "+iddossier+" with Medecin : "+idmed+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Sharing Medical Folder ID : "+iddossier+" with Medecin : "+idmed+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(patientService.ShareMedecialFolder(patient.getDossierMedical().getId_dossier(),idmed));
 
 	}
@@ -405,7 +405,7 @@ public class PatientController {
 			// 		.getPrincipal();
 			FichePatientResponse fiche = patientService.Fichepatient(idpat, globalVariables.getConnectedUser().getId());
 			activityServices.createActivity(new Date(),"Read","Consulting Fiche Patiend ID : "+idpat,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Fiche Patient ID :"+idpat+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting Fiche Patient ID :"+idpat+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return fiche;
 		
 	}
@@ -425,7 +425,7 @@ public ResponseEntity<?> findByIdMedecin(@Valid @PathVariable Long idpat,@Valid 
 		ConsultationDTO consul=consultationServices.findByIdPatient(idcons, patient.getId());
 
 		activityServices.createActivity(new Date(),"Read","Consulting Cosnultation ID : "+idcons+"for Patiend ID : "+idpat,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Cosnultation ID : "+idcons+"for Patiend ID : "+idpat+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting Cosnultation ID : "+idcons+"for Patiend ID : "+idpat+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
 		return ResponseEntity.ok(consul);
 	} catch (Exception e) {
@@ -446,7 +446,7 @@ public ResponseEntity<?> findAllByIdPatient(@Valid @PathVariable Long idpat){
 		Patient patient= patientService.findALLPatientByUserId(globalVariables.getConnectedUser().getId()).stream().filter(pat->(pat.getId()==idpat)).findFirst().orElseThrow(()->new Exception("No Matching Found"));
 		List<ConsultationDTO> allconsul=consultationServices.findALLByIdPatient(patient.getId());
 		activityServices.createActivity(new Date(),"Read","Consulting All Cosnultation for Patiend ID : "+idpat,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Cosnultation for Patiend ID : "+idpat+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Cosnultation for Patiend ID : "+idpat+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(allconsul);
 	} catch (Exception e) {
 		e.printStackTrace();

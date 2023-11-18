@@ -81,7 +81,7 @@ public class PatientService implements IDao<Patient> {
 			user.setDossierMedical(dossierMedical);
 		// save activity update Patient 
 		ActivityServices.createActivity(new Date(), "ADD", "Add New Patient", globalVariables.getConnectedUser());
-		LOGGER.info("Add new Patient "+user.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Add new Patient "+user.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return patientRepository.save((Patient) user);
 		
 
