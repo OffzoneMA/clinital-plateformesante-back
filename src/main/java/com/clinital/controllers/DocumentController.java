@@ -120,7 +120,7 @@ public class DocumentController {
 
 		List<Patient> allPatients = patientRepo.findAllById(globalVariables.getConnectedUser().getId());
 		activityServices.createActivity(new Date(),"Read","Consulting all Documents",globalVariables.getConnectedUser());
-		LOGGER.info("Conslting All documents By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Conslting All documents By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository
 				.findByPatientIdIn(allPatients.stream().map(patient -> patient.getId()).collect(Collectors.toList()))
 				.stream().map(document -> mapper.map(document, DocumentResponse.class)).collect(Collectors.toList());
@@ -134,11 +134,11 @@ public class DocumentController {
 
 		if (tutorialData.isPresent()) {
 			activityServices.createActivity(new Date(),"Read","Consulting  Document ID : "+id,globalVariables.getConnectedUser());
-			LOGGER.info("Conslting  document ID "+id+" ,By User ID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Conslting  document ID "+id+" ,By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return new ResponseEntity<>(mapper.map(tutorialData.get(), DocumentResponse.class), HttpStatus.OK);
 		} else {
 			
-			LOGGER.warn("Cant Found Doc ID : "+id+",Consulting By User ID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.warn("Cant Found Doc ID : "+id+",Consulting By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -148,7 +148,7 @@ public class DocumentController {
 	@ResponseBody
 	public List<DocumentResponse> findDocByIdPatient(@RequestParam("patient") Long patientId) {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents Pateint  ID :"+patientId,globalVariables.getConnectedUser());
-		LOGGER.info("Conslting  documents Pateint  ID :"+patientId+" By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Conslting  documents Pateint  ID :"+patientId+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByIdPatient(patientId).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
 				.collect(Collectors.toList());
 	}
@@ -157,7 +157,7 @@ public class DocumentController {
 	@ResponseBody
 	public List<DocumentResponse> findDocByIdRdv(@RequestParam Long rdvId) {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents By Rdv  ID :"+rdvId,globalVariables.getConnectedUser());
-		LOGGER.info("Conslting  documents by RDV ID :"+rdvId+" By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Conslting  documents by RDV ID :"+rdvId+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByIdRendezvous(rdvId).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
 				.collect(Collectors.toList());
 	}
@@ -166,7 +166,7 @@ public class DocumentController {
 	@ResponseBody
 	public List<DocumentResponse> findDocByNomPatient(@RequestParam String nomPatient) {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents Pateint  name :"+nomPatient,globalVariables.getConnectedUser());
-		LOGGER.info("Conslting  documents Pateint  name :"+nomPatient+" By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Conslting  documents Pateint  name :"+nomPatient+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByNomPatient(nomPatient).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
 				.collect(Collectors.toList());
 	}
@@ -196,7 +196,7 @@ public class DocumentController {
 			rdv.getDocuments().add(finalSavedDoc);
 			rdvRepository.save(rdv);
 			activityServices.createActivity(new Date(),"Add","Add New document ID:"+finalSavedDoc.getId_doc(),globalVariables.getConnectedUser());
-			LOGGER.info("Add new  documents ID :"+finalSavedDoc.getId_doc()+" By User ID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Add new  documents ID :"+finalSavedDoc.getId_doc()+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(new ApiResponse(true, "Document created successfully!",finalSavedDoc));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,7 +220,7 @@ public class DocumentController {
             "attachment; filename=\""
           + fileName + "\"");
 		  activityServices.createActivity(new Date(),"Read","Download document ID:",globalVariables.getConnectedUser());
-		  LOGGER.info("Dowanload  document ID :... By User ID : "+globalVariables.getConnectedUser().getId());
+		  LOGGER.info("Dowanload  document ID :... By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
       return ResponseEntity.ok().contentType(MediaType
                   .APPLICATION_OCTET_STREAM)
             .headers(headers).body(resource);
@@ -239,7 +239,7 @@ public class DocumentController {
 
 		List<Document> documents = docrepository.findByPatientId(patient.getId());
 		activityServices.createActivity(new Date(),"Read","Consulting All  documents by patient ID :"+id,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All  documents by patient ID :"+id+" By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All  documents by patient ID :"+id+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return documents.stream().map(doc -> mapper.map(doc, DocumentResponse.class)).collect(Collectors.toList());
 	}
 
@@ -253,7 +253,7 @@ public class DocumentController {
 
 		List<Document> documents = docrepository.findByPatientIdAndArchived(patient.getId(), true);
 		activityServices.createActivity(new Date(),"Read","Consulting Archived All  documents by patient ID :"+id,globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Archived  documents by patient ID :"+id+" By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Archived  documents by patient ID :"+id+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return documents.stream().map(doc -> mapper.map(doc, DocumentDTO.class)).collect(Collectors.toList());
 	}
 
@@ -262,7 +262,7 @@ public class DocumentController {
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	Iterable<TypeDocumentResponse> getTypeDocuments() {
 		activityServices.createActivity(new Date(),"Read","Consulting All Type  documents",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Types  documents By User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Types  documents By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return typeDocumentRepo.findAll().stream().map(typeDoc -> mapper.map(typeDoc, TypeDocumentResponse.class))
 				.collect(Collectors.toList());
 
@@ -303,7 +303,7 @@ public class DocumentController {
 		List<Document> documents = docrepository.getDocByPatientIdAndMedecin(
 				allPatients.stream().map(patient -> patient.getId()).collect(Collectors.toList()));
 				activityServices.createActivity(new Date(),"Read","Consulting All  documents",globalVariables.getConnectedUser());
-				LOGGER.info("Consulting All Archived  documents by patient ID ,User ID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Consulting All Archived  documents by patient ID ,User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return documents.stream().map(doc -> mapper.map(doc, DocumentResponse.class)).collect(Collectors.toList());
 	}
 
@@ -320,7 +320,7 @@ public class DocumentController {
 				allPatients.stream().map(patient -> patient.getId()).collect(Collectors.toList()));
 		if(!documents.isEmpty()){
 			activityServices.createActivity(new Date(),"Read","Consulting All Proch patient  documents by patient",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Proch patient  documents by patient ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Proch patient  documents by patient ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return documents.stream().map(doc -> mapper.map(doc, DocumentResponse.class)).collect(Collectors.toList());
 		}else throw new Exception(" NO MATCHING FOUND !");
 		
@@ -339,7 +339,7 @@ public class DocumentController {
 				allPatients.stream().map(patient -> patient.getId()).collect(Collectors.toList()));
 		if(!documents.isEmpty()){
 			activityServices.createActivity(new Date(),"Read","Consulting All documents for Connected user ",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All documents for connected User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All documents for connected User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return documents.stream().map(doc -> mapper.map(doc, DocumentResponse.class)).collect(Collectors.toList());
 		}else throw new Exception(" NO MATCHING FOUND !");
 		
@@ -355,11 +355,11 @@ public class DocumentController {
 
 		docrepository.save(document.get());
 		activityServices.createActivity(new Date(),"Update","Archive document ID :"+docId,globalVariables.getConnectedUser());
-		LOGGER.info("Archive document ID :"+docId+"by User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Archive document ID :"+docId+"by User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(new ApiResponse(true, "Archived"));
 		} else 
 		
-		LOGGER.info("Archive document failed by User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Archive document failed by User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(new ApiResponse(false, "no Matchng found !"));
 
 		
@@ -375,7 +375,7 @@ public class DocumentController {
 		azureAdapter.deleteBlob(document.get().getFichier_doc());
 		ResponseEntity.status(200).build();
 		activityServices.createActivity(new Date(),"Delete","Delete document ID :"+docId,globalVariables.getConnectedUser());
-		LOGGER.info("Delete document ID :"+docId+"by User ID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Delete document ID :"+docId+"by User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(new ApiResponse(true, "File has been Deleted"));
 
 	}

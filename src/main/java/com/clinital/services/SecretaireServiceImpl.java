@@ -70,7 +70,7 @@ public class SecretaireServiceImpl implements SecretaireService{
 		
 		if(secretaire.isPresent()) {
 			ActivityServices.createActivity(new Date(), "Update","Update Secretaire ID : "+secretaire.get().getId(),globalVariables.getConnectedUser());
-			LOGGER.info("Add New Secretaire ID : "+secretaire.get().getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", User ID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Add New Secretaire ID : "+secretaire.get().getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			
 			return this.SaveSecretaire(sec, secretaire.get());
 			
@@ -124,7 +124,7 @@ public class SecretaireServiceImpl implements SecretaireService{
 			if(!iscabinet.isPresent()){
 				secretaire2.getCabinet().add(cabinet);
 				ActivityServices.createActivity(new Date(), "Add","Add New Secretaire",globalVariables.getConnectedUser());
-				LOGGER.info("Add New Secretaire ID : "+secretaire2.getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", User ID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Add New Secretaire ID : "+secretaire2.getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
 			}else{
 				ActivityServices.createActivity(new Date(), "Warning", "You cant Add this Secretaire to Cabinet ID :"+cabinet

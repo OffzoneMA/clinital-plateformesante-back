@@ -108,12 +108,12 @@ public class MedecinNetworkService implements NetworkService {
         
         if(follower!=null){
             activityServices.createActivity(new Date(),"Delete","Delete Medecin from Network By ID : "+id_follower+"  for Connected Medecin Network",globalVariables.getConnectedUser());
-            LOGGER.info("Delete Medecin follwer from Network by id "+id_follower+" for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+            LOGGER.info("Delete Medecin follwer from Network by id "+id_follower+" for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
            medecinNetworkRepository.deleteNetworkById(follower.getMedecin().getId(), follower.getFollower().getId());
 
         } else
         activityServices.createActivity(new Date(),"error","Failed to Delete Medecin from Network By ID : "+id_follower+"  for Connected Medecin Network",globalVariables.getConnectedUser());
-        LOGGER.error("Failed Delete Medecin follwer from Network by id "+id_follower+" for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+        LOGGER.error("Failed Delete Medecin follwer from Network by id "+id_follower+" for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         throw new Exception("Fail to delete");
     }
     

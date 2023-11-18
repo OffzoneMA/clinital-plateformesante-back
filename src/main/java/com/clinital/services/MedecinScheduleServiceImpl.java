@@ -93,7 +93,7 @@ public class MedecinScheduleServiceImpl implements MedecinScheduleService {
         entityManger.persist(schedule);
         // MedecinSchedule medecinSchedule1 = medecinScheduleRepository.save(schedule);
             activityServices.createActivity(new Date(),"Add","Create New Schedule ID :"+schedule.getId(),globalVariables.getConnectedUser());
-			LOGGER.info("Create New Schedule ID :"+schedule.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Create New Schedule ID :"+schedule.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         return modelMapper.map(schedule, MedecinSchedule.class);
     }
 
@@ -120,13 +120,13 @@ public class MedecinScheduleServiceImpl implements MedecinScheduleService {
             medecinScheduleRepository.save(schedule);
 
             activityServices.createActivity(new Date(),"Update","Update New Schedule ID :"+schedule.getId(),globalVariables.getConnectedUser());
-			LOGGER.info("Update Schedule ID :"+schedule.getId()+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Update Schedule ID :"+schedule.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
             return schedule;
 
         } else
         activityServices.createActivity(new Date(),"Error","Cant Update Schedule",globalVariables.getConnectedUser());
-        LOGGER.error("Error to Update Schedule , UserID : "+globalVariables.getConnectedUser().getId());
+        LOGGER.error("Error to Update Schedule , UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
             throw new Exception("Failed to update");
     }
 
@@ -136,17 +136,17 @@ public class MedecinScheduleServiceImpl implements MedecinScheduleService {
         if (medecinSchedule.isPresent()) {
             medecinScheduleRepository.deleteById(id);
             activityServices.createActivity(new Date(),"Delete","Delete Schedule ID :"+id,globalVariables.getConnectedUser());
-			LOGGER.info("Delete Schedule ID :"+id+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Delete Schedule ID :"+id+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         } else
             activityServices.createActivity(new Date(),"Warning","Cant Delete Schedule ID :"+id,globalVariables.getConnectedUser());
-			LOGGER.warn("Cant Delete Schedule ID :"+id+", UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.warn("Cant Delete Schedule ID :"+id+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
             throw new Exception("Fail to delete");
     }
 
     // A method that returns a list of MedecinSchedule objects by id Medecin.
     public List<MedecinSchedule> GetAllSchedulesByMedId(long idmed) throws Exception {
             activityServices.createActivity(new Date(),"Read","Consulting All Schedules",globalVariables.getConnectedUser());
-			LOGGER.info("Consulting All Schedules , UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consulting All Schedules , UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         return medecinScheduleRepository.GetAllSchedulesByMedId(idmed)
                 .stream()
                 .map(schedule -> modelMapper.map(schedule, MedecinSchedule.class))
@@ -158,7 +158,7 @@ public class MedecinScheduleServiceImpl implements MedecinScheduleService {
     public MedecinSchedule GetAllSchedulesByIdsched(long idsched) throws Exception {
         MedecinSchedule medecinSchedule=medecinScheduleRepository.findById(idsched).orElseThrow(()->new Exception("No Matching Found"));
         activityServices.createActivity(new Date(),"Read","Consulting Schedule by id :"+idsched,globalVariables.getConnectedUser());
-			LOGGER.info("Consulting Schedule by id :"+idsched+" , UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consulting Schedule by id :"+idsched+" , UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         return medecinSchedule;
 
     }
@@ -168,7 +168,7 @@ public class MedecinScheduleServiceImpl implements MedecinScheduleService {
     public List<MedecinSchedule> GetAllSchedulesByMedIdandIdCOnsult(long idmed, long idconsult) throws Exception {
 
         activityServices.createActivity(new Date(),"Read","Consulting Schedule by id Med :"+idmed+" and ID Consultation : "+idconsult,globalVariables.getConnectedUser());
-			LOGGER.info("Consulting Schedule by id Med :"+idmed+" and ID Consultation : "+idconsult+" , UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consulting Schedule by id Med :"+idmed+" and ID Consultation : "+idconsult+" , UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
         return medecinScheduleRepository.GetAllSchedulesByMedIdandIdCOnsult(idmed, idconsult)
                 .stream()
                 .map(schedule -> modelMapper.map(schedule, MedecinSchedule.class))

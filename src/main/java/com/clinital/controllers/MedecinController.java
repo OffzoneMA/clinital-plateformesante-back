@@ -70,6 +70,7 @@ import com.clinital.models.MedecinNetwork;
 import com.clinital.models.MedecinSchedule;
 import com.clinital.models.Ordonnance;
 import com.clinital.models.TypeConsultation;
+import com.clinital.models.User;
 import com.clinital.payload.request.CabinetRequest;
 import com.clinital.payload.request.ConsultationRequest;
 import com.clinital.payload.request.DocumentsCabinetRequest;
@@ -228,7 +229,7 @@ public class MedecinController {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All Medecins",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting All Medecins by User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting All Medecins by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		
 		return medrepository.findAll().stream().filter(med->med.getIsActive()==true).collect(Collectors.toList());
@@ -251,7 +252,7 @@ public class MedecinController {
 		// 		.getPrincipal();
 		Medecin med = medecinService.getMedecinByUserId(globalVariables.getConnectedUser().getId());
 		activityServices.createActivity(new Date(),"Read","Consulting personnal Account ",globalVariables.getConnectedUser());
-		LOGGER.info("Consult Personal Account Medecin , User ID: "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult Personal Account Medecin , User ID: "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(med);
 	}
 
@@ -261,7 +262,7 @@ public class MedecinController {
 	public Iterable<Medecin> findMedByName(@RequestParam String nomMed) {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By Name : "+nomMed,globalVariables.getConnectedUser());
-			LOGGER.info("Consult Medecin By Name : "+nomMed+" by User : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consult Medecin By Name : "+nomMed+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return medrepository.getMedecinByName(nomMed).stream().filter(med->med.getIsActive()==true).collect(Collectors.toList());
 	}
@@ -273,7 +274,7 @@ public class MedecinController {
 			@RequestParam String search) {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Medecin By Ville : "+ville+" and Name/spcialite : "+search,globalVariables.getConnectedUser());
-					LOGGER.info("Consult Medecin By Ville : "+ville+" and Name/spcialite : "+search+" by User : "+globalVariables.getConnectedUser().getId());
+					LOGGER.info("Consult Medecin By Ville : "+ville+" and Name/spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				}
 		return medrepository.getMedecinBySpecialiteOrNameAndVille(ville, search).stream()
 		.filter(med->med.getIsActive()==true).collect(Collectors.toList());
@@ -285,7 +286,7 @@ public class MedecinController {
 			@RequestParam String search) {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Medecin By name : "+name+" and spcialite : "+search,globalVariables.getConnectedUser());
-				LOGGER.info("Consult Medecin By name : "+name+" and spcialite : "+search+" by User : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Consult Medecin By name : "+name+" and spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				}
 		return medrepository.getMedecinBySpecialiteOrName(name, search).stream()
 		.filter(med->med.getIsActive()==true).collect(Collectors.toList());
@@ -296,7 +297,7 @@ public class MedecinController {
 	public Iterable<Medecin> findMedSpecName(@RequestParam String search) {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By name or spcialite : "+search,globalVariables.getConnectedUser());
-		LOGGER.info("Consult Medecin By name or spcialite : "+search+" by User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult Medecin By name or spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return medrepository.getMedecinBySpecOrName(search).stream().filter(med->med.getIsActive()==true).collect(Collectors.toList());
 
@@ -307,7 +308,7 @@ public class MedecinController {
 	public Iterable<Medecin> findMedByVille(@RequestParam Long id_ville) {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By name ville ID"+id_ville,globalVariables.getConnectedUser());
-		LOGGER.info("Consult Medecin By ville ID : "+id_ville+" by User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult Medecin By ville ID : "+id_ville+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return medrepository.getMedecinByVille(id_ville).stream().filter(med->med.getIsActive()==true).collect(Collectors.toList());
 
@@ -320,7 +321,7 @@ public class MedecinController {
 			@PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ApiParam(value = "startDate", example = "yyyy-MM-dd") LocalDate startDate) {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Schedules of Medecin by is ID: "+idmed,globalVariables.getConnectedUser());
-				LOGGER.info("Consult schedules of Medecin By his ID : "+idmed+" name by User : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Consult schedules of Medecin By his ID : "+idmed+" name by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				}
 		return medScheduleRepo
 				.findByMedId(idmed)
@@ -423,7 +424,7 @@ public class MedecinController {
 
 			if(globalVariables.getConnectedUser()!=null){
 				activityServices.createActivity(new Date(),"Read","Consult Medecin Agenda by his ID : "+idmed,globalVariables.getConnectedUser());
-				LOGGER.info("Consult Medecin Agenda By his ID : "+idmed+" by User : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Consult Medecin Agenda By his ID : "+idmed+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			}
 
 			return agendaResponseList;
@@ -443,7 +444,7 @@ public class MedecinController {
 		LocalDateTime startDateTime = startDate.atStartOfDay();
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin RDV By his ID : "+idmed,globalVariables.getConnectedUser());
-			LOGGER.info("Consult Medecin RDV By his ID : "+idmed+" by User : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Consult Medecin RDV By his ID : "+idmed+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return ResponseEntity.ok(mapper.map(rendezvousService
 				.findRendezvousByMedAndDate(idmed, startDateTime), RendezvousDTO.class));
@@ -735,7 +736,7 @@ public class MedecinController {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All Consultation type By Medexin ID : "+id,globalVariables.getConnectedUser());
-		LOGGER.info("Consult All consultation type by Medecin ID : "+id+" by User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult All consultation type by Medecin ID : "+id+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 
 		return typeConsultationRepo.findAllByMedecinId(id).stream()
@@ -769,7 +770,7 @@ public class MedecinController {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All specialite",globalVariables.getConnectedUser());
-		LOGGER.info("Consult All specialites by User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult All specialites by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		}
 		return ResponseEntity.ok(specialiteService.findAll());
 	}
@@ -784,7 +785,7 @@ public class MedecinController {
 		// 		.getPrincipal();
 		
 		activityServices.createActivity(new Date(),"Read","Consult All Patient  By Connected Medecin ",globalVariables.getConnectedUser());
-		LOGGER.info("Consult All Patient by Connected Medecin , User : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult All Patient by Connected Medecin , User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		
 		return ResponseEntity.ok(medecinService.getMedecinPatients(globalVariables.getConnectedUser().getId()).stream()
 				.map(patient -> mapper.map(patient, PatientDTO.class))
@@ -798,7 +799,7 @@ public class MedecinController {
 		// 		.getPrincipal();
 		
 		activityServices.createActivity(new Date(),"Read","Consult Patinet By ID : "+idpatient+"  for Connected Medecin ",globalVariables.getConnectedUser());
-		LOGGER.info("Consult Patient by id "+idpatient+" for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consult Patient by id "+idpatient+" for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		
 		return ResponseEntity.ok(medecinService.getPatient(globalVariables.getConnectedUser().getId(), idpatient));
 
@@ -819,7 +820,7 @@ public class MedecinController {
 		// return ResponseEntity.ok(new ApiResponse(true, "Network has benn add
 		// Seccussefully"));
 		activityServices.createActivity(new Date(),"Add","Add Medecin By ID : "+network.getFollower_id()+"  for Connected Medecin Network",globalVariables.getConnectedUser());
-		LOGGER.info("Add Medecin by id "+network.getFollower_id()+" for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Add Medecin by id "+network.getFollower_id()+" for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(mapper.map(MedNet, MedecinNetwork.class));
 
 	}
@@ -841,7 +842,7 @@ public class MedecinController {
 		// medecinNetworkService.getMedecinfollewerById(med.getId(), follower_id),
 		// MedecinNetworkDTO.class);
 		activityServices.createActivity(new Date(),"Read","Consulting Medecin Follower By ID : "+follower_id+"  for Connected Medecin Network",globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Medecin Follower by id "+follower_id+" for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+		LOGGER.info("Consulting Medecin Follower by id "+follower_id+" for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return mapper.map(medecinNetworkService.getMedecinfollewerById(med.getId(), follower_id), MedecinDTO.class);
 
 	}
@@ -872,7 +873,7 @@ public class MedecinController {
 		// List<Medecin> Followers =
 		// medecinNetworkService.getAllMedecinNetwork(med.getId());
 		activityServices.createActivity(new Date(),"Read","Consult Medecin  Network  for Connected Medecin Network",globalVariables.getConnectedUser());
-        LOGGER.info("Consult Medecin Network for Medecin Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+        LOGGER.info("Consult Medecin Network for Medecin Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(medecinNetworkService.getAllMedecinNetwork(med.getId()).stream()
 				.map(follower -> mapper.map(follower, MedecinDTO.class))
 				.collect(Collectors.toList()));
@@ -886,7 +887,7 @@ public class MedecinController {
 
 		Medecin med = medecinService.setVisibiltyMedecin(id);
 		activityServices.createActivity(new Date(),"Update","Update Medecin Visibilte : "+id,globalVariables.getConnectedUser());
-        LOGGER.info("Update Medecin visibelite by id :"+id +", Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+        LOGGER.info("Update Medecin visibelite by id :"+id +", Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(mapper.map(med, Medecin.class));
 
 	}
@@ -896,7 +897,7 @@ public class MedecinController {
 
 		Cabinet cabinet = cabservice.CabinetStateValidation(id);
 		activityServices.createActivity(new Date(),"Update","Update Cabinet By ID : "+id+", Cabinet State Updated to :"+cabinet.getState(),globalVariables.getConnectedUser());
-            LOGGER.info("Update Cabinet By ID : "+id+", Cabinet State Updated to :"+cabinet.getState()+" , by Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+            LOGGER.info("Update Cabinet By ID : "+id+", Cabinet State Updated to :"+cabinet.getState()+" , by Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return ResponseEntity.ok(mapper.map(cabinet, Cabinet.class));
 
 	}
@@ -914,7 +915,7 @@ public class MedecinController {
 		medrepository.save(medecin);
 		CabinetMedecinsSpace Cabmed = medcabinetservice.addCabinetMedecinsSpace(cabinetreq.getCabinetmedecin(),cabinet,medecin );
 		activityServices.createActivity(new Date(),"Add","Add new Cabinet By Connected Medecin Admin",globalVariables.getConnectedUser());
-            LOGGER.info("Add new Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+            LOGGER.info("Add new Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		//return cabinet;
 		return ResponseEntity.ok(cabinet);
 
@@ -929,7 +930,7 @@ public class MedecinController {
 		medrepository.save(medecin);
 		CabinetMedecinsSpace Cabmed = medcabinetservice.addCabinetMedecinsSpace(cabinetreq.getCabinetmedecin(),cabinet, medecin);
 		activityServices.createActivity(new Date(),"Add","Add a Medecin ID "+ medecin.getId()+" to  Cabinet By Connected Medecin Admin",globalVariables.getConnectedUser());
-            LOGGER.info("Add Medecin ID "+ medecin.getId()+" to Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+            LOGGER.info("Add Medecin ID "+ medecin.getId()+" to Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return cabinet;
 
 	}
@@ -948,7 +949,7 @@ public class MedecinController {
 
 			// med.removeCabinet(cabinet);
 			activityServices.createActivity(new Date(),"Delete","Add a  Cabinet ID:"+cabinet.getId_cabinet()+" By Connected Medecin Admin",globalVariables.getConnectedUser());
-            LOGGER.info("Delete a Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+globalVariables.getConnectedUser().getId());
+            LOGGER.info("Delete a Cabinet ID: "+cabinet.getId_cabinet()+" , by Connected, User ID  : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok("Cabinet has been deleted successefully");
 		} else
 			throw new BadRequestException("You are Not Allowed");
@@ -981,7 +982,7 @@ public class MedecinController {
 			med.setStepsValidation(med.getStepsValidation()+1);
 			medrepository.save(med);
 			activityServices.createActivity(new Date(),"Add","Add New document ID:"+savedDoc.getId()+", for Cabinet ID : "+documentReq.getId_cabinet(),globalVariables.getConnectedUser());
-			LOGGER.info("Add New document ID:"+savedDoc.getId()+", for Cabinet ID : "+documentReq.getId_cabinet()+" by User : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Add New document ID:"+savedDoc.getId()+", for Cabinet ID : "+documentReq.getId_cabinet()+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(new ApiResponse(true, "Document created successfully!"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1015,13 +1016,13 @@ public class MedecinController {
 			if (secreServiceImpl.deleteSecretaireById(idsec, idcabinet)) {
 
 				activityServices.createActivity(new Date(),"Delete","Delete Scretaire :"+idsec+", By Medecin Admin",globalVariables.getConnectedUser());
-				LOGGER.info("Delete Secretaire :"+idsec+", By Medecin Admin, UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Delete Secretaire :"+idsec+", By Medecin Admin, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
 				return ResponseEntity.ok(new ApiResponse(true, "Deleted Seccuesefully"));
 			}
 		} else
 				activityServices.createActivity(new Date(),"Error","You are not Allowed to Delete",globalVariables.getConnectedUser());
-				LOGGER.info("You are not Allowed to Delete, UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("You are not Allowed to Delete, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				throw new BadRequestException(" You are not Allowed !");
 		
 
@@ -1047,21 +1048,21 @@ public class MedecinController {
 				
 				sec.getCabinet().add(cabinet);
 				activityServices.createActivity(new Date(),"Add","Add New Secretaie ID: "+sec.getId()+" to Cabinet ID: "+cabinet.getId_cabinet(),globalVariables.getConnectedUser());
-				LOGGER.info("Add New Secretaie ID : "+sec.getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", UserID : "+globalVariables.getConnectedUser().getId());
+				LOGGER.info("Add New Secretaie ID : "+sec.getId()+" to Cabinet ID : "+cabinet.getId_cabinet()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 				return ResponseEntity.ok(sec);
 
 	
 			
 		}else
 		activityServices.createActivity(new Date(),"Warning","Secretaie ID: "+sec.getId()+" Not Found",globalVariables.getConnectedUser());
-		LOGGER.warn("Secretaie ID : "+sec.getId()+" Not Found, UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.warn("Secretaie ID : "+sec.getId()+" Not Found, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			throw new Exception("Failed to Find Secretaire");
 			
 
 			
 		} else
 		activityServices.createActivity(new Date(),"Error","Your not Allowed to add Secretaire",globalVariables.getConnectedUser());
-		LOGGER.warn("You are not Allowed to add Secretaire, UserID : "+globalVariables.getConnectedUser().getId());
+		LOGGER.warn("You are not Allowed to add Secretaire, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			throw new BadRequestException(" You are not Allowed !");
 		
 
@@ -1082,7 +1083,7 @@ public class MedecinController {
 			
 			Long Steps = med.getStepsValidation();
 			activityServices.createActivity(new Date(),"Read","Checking Steps Validation",globalVariables.getConnectedUser());
-			LOGGER.info("Checking Steps Validation, UserID : "+globalVariables.getConnectedUser().getId());
+			LOGGER.info("Checking Steps Validation, UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 			return ResponseEntity.ok(Steps);
 
 			
