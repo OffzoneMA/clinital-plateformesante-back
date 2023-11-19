@@ -26,6 +26,7 @@ import com.clinital.security.services.UserDetailsImpl;
 import com.clinital.services.interfaces.NetworkService;
 import com.clinital.util.ClinitalModelMapper;
 import com.clinital.util.GlobalVariables;
+import com.clinital.models.User;
 
 @Transactional
 @Service
