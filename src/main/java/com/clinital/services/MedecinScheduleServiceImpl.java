@@ -10,6 +10,7 @@ import com.clinital.models.Medecin;
 import com.clinital.models.MedecinSchedule;
 import com.clinital.models.ModeConsultation;
 import com.clinital.models.TypeConsultation;
+import com.clinital.models.User;
 import com.clinital.payload.request.MedecinScheduleRequest;
 import com.clinital.payload.response.ApiResponse;
 import com.clinital.repository.CabinetRepository;
