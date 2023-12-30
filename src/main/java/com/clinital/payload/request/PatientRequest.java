@@ -13,7 +13,6 @@ import lombok.Data;
 
 @Data
 public class PatientRequest {
-
 	private Long id;
 
 	@NotNull
@@ -34,8 +33,8 @@ public class PatientRequest {
 	private String mutuelNumber;
 	@Size(max = 50)
 	@Email
-	private String email;
-	private String telephone;
+	private String patientEmail;
+	private String patientTelephone;
 	private PatientTypeEnum patient_type;
 
 }

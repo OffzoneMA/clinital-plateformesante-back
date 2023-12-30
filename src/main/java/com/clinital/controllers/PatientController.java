@@ -155,10 +155,11 @@ public class PatientController {
 			// patientEntity.setVille(ville);
 			if (patientEntity.getPatient_type() == null) {
 				patientEntity.setPatient_type(PatientTypeEnum.MOI);
+				
 			} else {
 				patientEntity.setPatient_type(PatientTypeEnum.PROCHE);
 			}
-			patientEntity.setPatientEmail(patient.getEmail());
+			patientEntity.setPatientEmail(patient.getPatientEmail());
 			Patient pat = patientService.create(patientEntity);
 			activityServices.createActivity(new Date(),"Add","Add New Patient ID : "+pat.getId(),globalVariables.getConnectedUser());
 		LOGGER.info("Add New Patient ID : "+pat.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -197,6 +198,7 @@ public class PatientController {
 
 	// Updating a patient by id. %OK%
 	@PostMapping("/updatepatient/{id}")
+	@ResponseBody
 	public ResponseEntity<?> updatePatient(@Valid @PathVariable Long id,
 			@Valid @RequestBody PatientRequest patient) throws BadRequestException {
 
@@ -219,6 +221,10 @@ public class PatientController {
 				pt.setCodePost_pat(patient.getCodePost_pat());
 				pt.setMatricule_pat(patient.getMatricule_pat());
 				pt.setCivilite_pat(patient.getCivilite_pat());
+				pt.setPatientEmail(patient.getPatientEmail());
+				pt.setPatientTelephone(patient.getPatientTelephone());
+				pt.setPlaceOfBirth(patient.getPlaceOfBirth());
+				pt.setMutuelNumber(patient.getMutuelNumber());;
 				pt.setVille(ville);
 				// pt.setUser(mapper.map(userRepo.getOne(globalVariables.getConnectedUser().getId()), User.class));
 				pt.setPatient_type(patient.getPatient_type());
@@ -226,7 +232,7 @@ public class PatientController {
 				Patient updatedpt = patientRepo.save(pt);
 				activityServices.createActivity(new Date(),"Update","Update Patient ID : "+pt.getId(),globalVariables.getConnectedUser());
 				LOGGER.info("Update Patient ID : "+pt.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
-				return ResponseEntity.ok(mapper.map(updatedpt, PatientResponse.class));
+				return ResponseEntity.ok(mapper.map(updatedpt, Patient.class));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -248,7 +254,7 @@ public class PatientController {
 	 */
 	@GetMapping("/getmypatientaccount") // %OK%
 	@ResponseBody
-	public ResponseEntity<PatientResponse> getPatientByUserId() {
+	public ResponseEntity<Patient> getPatientByUserId() {
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
 
@@ -257,7 +263,7 @@ public class PatientController {
 		activityServices.createActivity(new Date(),"Read","Consulting personal Patient Account : "+patient.getId(),globalVariables.getConnectedUser());
 		LOGGER.info("Consulting Personal Patient Account ID : "+patient.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 
-		return ResponseEntity.ok(mapper.map(patient, PatientResponse.class));
+		return ResponseEntity.ok(mapper.map(patient, Patient.class));
 
 	}
 
