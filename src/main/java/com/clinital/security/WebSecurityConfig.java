@@ -143,6 +143,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
         http.headers(headers -> headers.frameOptions().disable());
+		http.headers().httpStrictTransportSecurity().disable();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         http
                 .authorizeRequests(requests -> requests

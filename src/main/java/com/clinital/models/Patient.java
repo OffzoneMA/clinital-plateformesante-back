@@ -21,7 +21,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.clinital.enums.CiviliteEnum;
 import com.clinital.enums.PatientTypeEnum;
@@ -33,6 +35,8 @@ import lombok.Data;
 @Table(name = "patients")
 @Data
 public class Patient {
+	
+	//------------------------------------
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -264,18 +264,14 @@ public class UserServiceImpl implements UserService {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-		// User user1 =
-		// userRepository.findUserByEmail(signUpRequest.getEmail()).orElseThrow(()->new
-		// Exception("Error: Email is already in use!"));
 		// Create new user's account
 		User user = new User(signUpRequest.getEmail(), signUpRequest.getTelephone(),
 				encoder.encode(signUpRequest.getPassword()), signUpRequest.getRole());
 
 		user.setProvider(ProviderEnum.LOCAL);
 		// save user
+		userRepository.save(user);
 
-		entityManger.persist(user);
-		// userRepository.save(user);
 		this.save(user,null);
 
 		// save activity of user signup

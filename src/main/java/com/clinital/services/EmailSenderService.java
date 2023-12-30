@@ -31,10 +31,12 @@ public class EmailSenderService {
 
 	@Async
 	public void sendMail(String userEmail, String confirmationToken) {
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		final String BaseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 		
-		System.out.println("this is the URL Root :"+BaseUrl);
+		try{
+SimpleMailMessage mailMessage = new SimpleMailMessage();
+		final String BaseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+			System.out.println("this is the URL Root :"+BaseUrl);
+		System.out.println("this is the URL Root :"+userEmail);
 		mailMessage.setTo(userEmail);
 		mailMessage.setFrom("no-reply@clinital.io");
 		mailMessage.setSubject("Activation du compte clinital!");
@@ -44,6 +46,12 @@ public class EmailSenderService {
 				+ "   Note: le lien va expirer après 10 minutes.");
 		javaMailSender.send(mailMessage);
 		LOGGER.info("A New Account has been Created, token activationis sent");
+
+		}catch(Exception e){
+			LOGGER.error("Error while sending email : {}",e);
+			System.out.println(2);
+		}
+		
 	}
 
 	public void sendMailDemande(Demande demande,String pw ) {
