@@ -129,7 +129,7 @@ public class PatientController {
 
 	@GetMapping("/getall/type/{type}")
 	@ResponseBody
-	public List<PatientResponse> findPatientByType(@PathVariable PatientTypeEnum type) {
+	public List<PatientResponse> findPatientByType(@PathVariable PatientTypeEnum type) throws Exception {
 		activityServices.createActivity(new Date(),"Read","Consulting All Patient by type : "+type,globalVariables.getConnectedUser());
 		LOGGER.info("Consulting All Patient by type : "+type+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		
@@ -140,7 +140,7 @@ public class PatientController {
 	// A method that is used to add a patient to the database. %OK%
 	@PostMapping("/addpatient")
 	@ResponseBody
-	public ResponseEntity<?> addPatient(@Valid @RequestBody PatientRequest patient) throws BadRequestException {
+	public ResponseEntity<?> addPatient(@Valid @RequestBody PatientRequest patient) throws Exception {
 		if (patient != null) {
 			// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 			// 		.getPrincipal();
@@ -171,7 +171,7 @@ public class PatientController {
 
 	// Deleting a patient by id. %OK%
 	@DeleteMapping("/delete/{id}")
-	public Map<String, Boolean> deletePatient(@PathVariable Long id) throws BadRequestException {
+	public Map<String, Boolean> deletePatient(@PathVariable Long id) throws Exception {
 		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 
@@ -200,7 +200,7 @@ public class PatientController {
 	@PostMapping("/updatepatient/{id}")
 	@ResponseBody
 	public ResponseEntity<?> updatePatient(@Valid @PathVariable Long id,
-			@Valid @RequestBody PatientRequest patient) throws BadRequestException {
+			@Valid @RequestBody PatientRequest patient) throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
@@ -251,19 +251,25 @@ public class PatientController {
 	 * 
 	 * @param id the id of the user
 	 * @return Patient
+	 * @throws Exception
 	 */
 	@GetMapping("/getmypatientaccount") // %OK%
 	@ResponseBody
-	public ResponseEntity<Patient> getPatientByUserId() {
+	public ResponseEntity<PatientResponse> getPatientByUserId() throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
 
 		Patient patient = patientService.getPatientMoiByUserId(globalVariables.getConnectedUser().getId());
+		System.out.println(patient.getId());
+		mapper.typeMap(Patient.class, PatientResponse.class)
+		.addMapping(src -> src.getVille().getId_ville(), PatientResponse::setVilleId);
 
-		activityServices.createActivity(new Date(),"Read","Consulting personal Patient Account : "+patient.getId(),globalVariables.getConnectedUser());
-		LOGGER.info("Consulting Personal Patient Account ID : "+patient.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
+  		PatientResponse patientResponse = mapper.map(patient, PatientResponse.class);
+			activityServices.createActivity(new Date(),"Read","Consulting personal Patient Account : "+patient.getId(),globalVariables.getConnectedUser());
+			LOGGER.info("Consulting Personal Patient Account ID : "+patient.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
+  		return ResponseEntity.ok(patientResponse);
+	
 
-		return ResponseEntity.ok(mapper.map(patient, Patient.class));
 
 	}
 
@@ -301,10 +307,11 @@ public class PatientController {
 	 * 
 	 * @param id the id of the user
 	 * @return List of Patient %OK%
+	 * @throws Exception
 	 */
 	@GetMapping("/getallproch")
 	@ResponseBody
-	public ResponseEntity<?> findALLProchByUserId() {
+	public ResponseEntity<?> findALLProchByUserId() throws Exception {
 
 		
 		activityServices.createActivity(new Date(),"Read","Consulting All Proch Account",globalVariables.getConnectedUser());
@@ -318,10 +325,11 @@ public class PatientController {
 	 * 
 	 * @param id the id of the user
 	 * @return List of Patient objects %OK%
+	 * @throws Exception
 	 */
 	@GetMapping("/getall")
 	@ResponseBody
-	public List<Patient> findALLPatientByUserId() {
+	public List<Patient> findALLPatientByUserId() throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();

@@ -57,9 +57,15 @@ public class SecretaireServiceImpl implements SecretaireService{
 
 	@Override
 	public Secretaire create(SecritaireRequest sec) {
-
+try {
 		Secretaire secUser = new Secretaire();
-		return this.SaveSecretaire(sec, secUser);
+		
+			return this.SaveSecretaire(sec, secUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+return null;
 		
 	}
 
@@ -80,13 +86,20 @@ public class SecretaireServiceImpl implements SecretaireService{
 
 	@Override
 	public List<Secretaire> findAll() {
-		ActivityServices.createActivity(new Date(), "Read", "Consult All Secretaire ",globalVariables.getConnectedUser());
-		LOGGER.info("Consult All Secretaire, UserID : " + globalVariables.getConnectedUser().getId());
+		try {ActivityServices.createActivity(new Date(), "Read", "Consult All Secretaire ",globalVariables.getConnectedUser());
+		
+			LOGGER.info("Consult All Secretaire, UserID : " + globalVariables.getConnectedUser().getId());
+		
 		return secretaireRepository
 				.findAll()
 				.stream()
 				.map(secretaire->clinitalModelMapper.map(secretaire, Secretaire.class))
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());} 
+				catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -111,7 +124,7 @@ public class SecretaireServiceImpl implements SecretaireService{
 		
 	}
 
-	public Secretaire SaveSecretaire(SecritaireRequest sec, Secretaire secretaire2 ){
+	public Secretaire SaveSecretaire(SecritaireRequest sec, Secretaire secretaire2 ) throws Exception{
 
 		// UserDetailsImpl userdetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 // check if any Cabinet exist already in DB with the given ID.

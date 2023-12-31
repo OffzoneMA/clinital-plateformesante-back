@@ -225,7 +225,7 @@ public class MedecinController {
 
 	@GetMapping("/medecins")
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	public Iterable<Medecin> medecins() {
+	public Iterable<Medecin> medecins() throws Exception {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All Medecins",globalVariables.getConnectedUser());
@@ -259,7 +259,7 @@ public class MedecinController {
 	// Get Medecin y his name : %OK%
 	@GetMapping("/medByName")
 	@ResponseBody
-	public Iterable<Medecin> findMedByName(@RequestParam String nomMed) {
+	public Iterable<Medecin> findMedByName(@RequestParam String nomMed) throws Exception {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By Name : "+nomMed,globalVariables.getConnectedUser());
 			LOGGER.info("Consult Medecin By Name : "+nomMed+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -271,7 +271,7 @@ public class MedecinController {
 	@GetMapping("/medByNameOrSpecAndVille")
 	@ResponseBody
 	public Iterable<Medecin> medByNameOrSpecAndVille(@RequestParam String ville,
-			@RequestParam String search) {
+			@RequestParam String search) throws Exception {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Medecin By Ville : "+ville+" and Name/spcialite : "+search,globalVariables.getConnectedUser());
 					LOGGER.info("Consult Medecin By Ville : "+ville+" and Name/spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -283,7 +283,7 @@ public class MedecinController {
 	// end point for getting Doctor by Name and speciality : %OK%
 	@GetMapping("/medByNameAndSpec")
 	public Iterable<Medecin> findMedSpecNameVille(@RequestParam String name,
-			@RequestParam String search) {
+			@RequestParam String search) throws Exception {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Medecin By name : "+name+" and spcialite : "+search,globalVariables.getConnectedUser());
 				LOGGER.info("Consult Medecin By name : "+name+" and spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -294,7 +294,7 @@ public class MedecinController {
 
 	// end point for getting Doctor by Name or speciality : %OK%
 	@GetMapping("/medByNameOrSpec")
-	public Iterable<Medecin> findMedSpecName(@RequestParam String search) {
+	public Iterable<Medecin> findMedSpecName(@RequestParam String search) throws Exception {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By name or spcialite : "+search,globalVariables.getConnectedUser());
 		LOGGER.info("Consult Medecin By name or spcialite : "+search+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -305,7 +305,7 @@ public class MedecinController {
 
 	// end point for getting Doctor By city : %OK%
 	@GetMapping("/medByVille")
-	public Iterable<Medecin> findMedByVille(@RequestParam Long id_ville) {
+	public Iterable<Medecin> findMedByVille(@RequestParam Long id_ville) throws Exception {
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult Medecin By name ville ID"+id_ville,globalVariables.getConnectedUser());
 		LOGGER.info("Consult Medecin By ville ID : "+id_ville+" by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -318,7 +318,7 @@ public class MedecinController {
 	@GetMapping("/schedulesofMed/{idmed}")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	public List<MedecinSchedule> findallSchudelesfromDate(@PathVariable Long idmed,
-			@PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ApiParam(value = "startDate", example = "yyyy-MM-dd") LocalDate startDate) {
+			@PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ApiParam(value = "startDate", example = "yyyy-MM-dd") LocalDate startDate) throws Exception {
 				if(globalVariables.getConnectedUser()!=null){
 					activityServices.createActivity(new Date(),"Read","Consult Schedules of Medecin by is ID: "+idmed,globalVariables.getConnectedUser());
 				LOGGER.info("Consult schedules of Medecin By his ID : "+idmed+" name by User : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
@@ -439,7 +439,7 @@ public class MedecinController {
 	@GetMapping("/rdvofMed/{idmed}/{startDate}")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	public ResponseEntity<RendezvousDTO> findallRDVforMedBystartDate(@PathVariable Long idmed,
-			@PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ApiParam(value = "startDate", example = "yyyy-MM-dd") LocalDate startDate) {
+			@PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ApiParam(value = "startDate", example = "yyyy-MM-dd") LocalDate startDate) throws Exception {
 
 		LocalDateTime startDateTime = startDate.atStartOfDay();
 		if(globalVariables.getConnectedUser()!=null){
@@ -732,7 +732,7 @@ public class MedecinController {
 	// end point for getting get type Consultation of a doctor : %OK%
 	@GetMapping("/getTypeConsultationById/{id}")
 	@ResponseBody
-	public List<TypeConsultationResponse> findTypeConsultationById(@PathVariable Long id) {
+	public List<TypeConsultationResponse> findTypeConsultationById(@PathVariable Long id) throws Exception {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All Consultation type By Medexin ID : "+id,globalVariables.getConnectedUser());
@@ -766,7 +766,7 @@ public class MedecinController {
 
 	// end point for getting all Specialite : %OK%
 	@GetMapping("/getAllSpec")
-	public ResponseEntity<List<SpecialiteDTO>> findAll() {
+	public ResponseEntity<List<SpecialiteDTO>> findAll() throws Exception {
 
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","Consult All specialite",globalVariables.getConnectedUser());
@@ -810,7 +810,7 @@ public class MedecinController {
 	 */
 	// Add a New Doctor to the Network : %OK%
 	@PostMapping("/addNewNetwork")
-	public ResponseEntity<?> addNewNetwork(@Valid @RequestBody networkRequest network) {
+	public ResponseEntity<?> addNewNetwork(@Valid @RequestBody networkRequest network) throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
@@ -883,7 +883,7 @@ public class MedecinController {
 	//
 	// Setting the visibility of the medication with the given id.
 	@PostMapping("/setvisibilityMed/{id}")
-	public ResponseEntity<?> Setvisibilty(@Valid @PathVariable long id) {
+	public ResponseEntity<?> Setvisibilty(@Valid @PathVariable long id) throws Exception {
 
 		Medecin med = medecinService.setVisibiltyMedecin(id);
 		activityServices.createActivity(new Date(),"Update","Update Medecin Visibilte : "+id,globalVariables.getConnectedUser());

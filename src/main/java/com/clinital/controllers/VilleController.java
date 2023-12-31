@@ -49,7 +49,7 @@ public class VilleController {
 
 	@GetMapping("/allvilles")
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	Iterable<VilleDTO> villes() {
+	Iterable<VilleDTO> villes() throws Exception {
 	
 		if(globalVariables.getConnectedUser()!=null){
 			activityServices.createActivity(new Date(),"Read","LOADING All cities ",globalVariables.getConnectedUser());

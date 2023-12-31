@@ -2,6 +2,10 @@ package com.clinital.payload.response;
 
 import java.util.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.clinital.dto.VilleDTO;
 import com.clinital.enums.CiviliteEnum;
 import com.clinital.enums.PatientTypeEnum;
@@ -10,20 +14,26 @@ import lombok.Data;
 
 @Data
 public class PatientResponse {
+private Long id;
 
-	private Long id;
-
+	@NotNull
 	private String nom_pat;
+	@NotNull
 	private String prenom_pat;
+	@NotNull
 	private Date dateNaissance;
+	@NotNull
 	private String adresse_pat;
-	private String codePost_pat;
-	private String matricule_pat;
 	private CiviliteEnum civilite_pat;
-	private VilleDTO ville;
-//	private UserDTO user;
+	@NotNull
+	private String codePost_pat;
+	@NotNull
+	private String matricule_pat;
+	private Long villeId;
 	private String placeOfBirth;
 	private String mutuelNumber;
+	@Size(max = 50)
+	@Email
 	private String patientEmail;
 	private String patientTelephone;
 	private PatientTypeEnum patient_type;

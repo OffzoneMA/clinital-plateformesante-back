@@ -55,7 +55,7 @@ public class CabinetController {
 	public final Logger LOGGER=LoggerFactory.getLogger(this.getClass());
 	
 	@GetMapping("/cabinetById/{id}")
-	public ResponseEntity<?> getCabinetById(@PathVariable Long id) {
+	public ResponseEntity<?> getCabinetById(@PathVariable Long id) throws Exception {
 		Optional<Cabinet> cab = cabinetrep.findById(id);
 
 		if (cab.isPresent()) {
