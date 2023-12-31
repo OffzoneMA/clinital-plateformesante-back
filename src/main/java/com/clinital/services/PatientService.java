@@ -68,8 +68,8 @@ public class PatientService implements IDao<Patient> {
 	private final Logger LOGGER=LoggerFactory.getLogger(getClass());
 
 	@Override
-	public Patient create(Patient user) {
-		
+	public Patient create(Patient user){
+		try {
 		DossierMedical dossierMedical = new DossierMedical();
 			dossierMedical.setAlchole(false);
 			dossierMedical.setFumeur(false);
@@ -81,7 +81,12 @@ public class PatientService implements IDao<Patient> {
 			user.setDossierMedical(dossierMedical);
 		// save activity update Patient 
 		ActivityServices.createActivity(new Date(), "ADD", "Add New Patient", globalVariables.getConnectedUser());
-		LOGGER.info("Add new Patient "+user.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
+		
+			LOGGER.info("Add new Patient "+user.getId()+", UserID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return patientRepository.save((Patient) user);
 		
 

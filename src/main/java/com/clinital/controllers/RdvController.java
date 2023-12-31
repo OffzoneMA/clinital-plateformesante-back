@@ -158,7 +158,7 @@ public class RdvController {
 
 	// Get Rdv By Id and Id patient : %OK%
 	@GetMapping("patient/rdvById/{id}")
-	public Rendezvous getRdvByIdBypatient(@PathVariable Long id) {
+	public Rendezvous getRdvByIdBypatient(@PathVariable Long id) throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
@@ -174,7 +174,7 @@ public class RdvController {
 
 	// Get Rdv By Id and id medecin : %ok%
 	@GetMapping("/med/rdvById/{id}")
-	public Rendezvous getRdvByIdBymedecin(@PathVariable Long id) {
+	public Rendezvous getRdvByIdBymedecin(@PathVariable Long id) throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
@@ -194,7 +194,7 @@ public class RdvController {
 	// Get Rdv By ID patient for Medecin :
 	@GetMapping("/med/rdvByIdPatient/{id}")
 	@ResponseBody
-	public List<RendezvousResponse> findRdvByIdPatient(@PathVariable Long id) {
+	public List<RendezvousResponse> findRdvByIdPatient(@PathVariable Long id) throws BadRequestException, Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -231,7 +231,7 @@ public class RdvController {
 	@GetMapping("med/rdvByNomPatient/{nompat}")
 	@ResponseBody
 	public List<Rendezvous> getRdvByNomPatientandMedecin(
-			@PathVariable(value = "nompat") @NotNull String nomPatient) {
+			@PathVariable(value = "nompat") @NotNull String nomPatient) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -247,7 +247,7 @@ public class RdvController {
 	// Get RDV By patient Name : %OK% getRdvByNomPatientByMedecin
 	@GetMapping("patient/rdvByNomPatient/{nompat}")
 	@ResponseBody
-	public List<Rendezvous> findRdvByNomPatient(@PathVariable(value = "nompat") @NotNull String nomPatient) {
+	public List<Rendezvous> findRdvByNomPatient(@PathVariable(value = "nompat") @NotNull String nomPatient) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -263,7 +263,7 @@ public class RdvController {
 	@GetMapping("/patient/rdvByDate")
 	@ResponseBody
 	public List<RendezvousResponse> rdvByDate(
-			@Valid @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate jour) {
+			@Valid @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate jour) throws Exception {
 		// UserDetailsImpl uDetailsImpl= (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		activityServices.createActivity(new Date(), "Read", "Consulting rdv for Patient by Date : " + jour,
@@ -462,7 +462,7 @@ public class RdvController {
 
 	// Get Rdv For connected Medecin : %OK%
 	@GetMapping("/rdvs/medecin")
-	Iterable<RendezvousResponse> rendezvousForMedecin() {
+	Iterable<RendezvousResponse> rendezvousForMedecin() throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -477,7 +477,7 @@ public class RdvController {
 
 	// Get Rdv For connected Patient : %OK%
 	@GetMapping("/rdvs/patient")
-	List<Rendezvous> rendezvousForPatient() {
+	List<Rendezvous> rendezvousForPatient() throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -538,7 +538,7 @@ public class RdvController {
 
 	// cancel Rdv For connected Patient : %OK%
 	@PostMapping("/patient/cancelRdv/{id}")
-	public ResponseEntity<?> cancelRdvByPatient(@Valid @PathVariable Long id) {
+	public ResponseEntity<?> cancelRdvByPatient(@Valid @PathVariable Long id) throws Exception {
 		// Rendezvous rdv = rdvrepository.findById(id)
 		// .orElseThrow(() -> new BadRequestException("Rendez-vous not found for this id
 		// :: " + id));
@@ -634,7 +634,7 @@ public class RdvController {
 	// RDV By DATE FELTRING (day,week, month ,year) :
 	// RDV FOR DOCTOR BY DAY :
 	@GetMapping("/med/rdvbyday/{day}")
-	List<Rendezvous> rendezvousMedByday(@Valid @PathVariable long day) {
+	List<Rendezvous> rendezvousMedByday(@Valid @PathVariable long day) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -649,7 +649,7 @@ public class RdvController {
 
 	// RDV FOR DOCTOR BY WEEK :
 	@GetMapping("/med/rdvbyweek/{week}")
-	List<Rendezvous> rendezvousMedByweek(@Valid @PathVariable long week) {
+	List<Rendezvous> rendezvousMedByweek(@Valid @PathVariable long week) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -664,7 +664,7 @@ public class RdvController {
 
 	// RDV FOR DOCTOR BY MONTH :
 	@GetMapping("/med/rdvbymonth/{month}")
-	List<Rendezvous> rendezvousMedBymonth(@Valid @PathVariable long month) {
+	List<Rendezvous> rendezvousMedBymonth(@Valid @PathVariable long month) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -679,7 +679,7 @@ public class RdvController {
 
 	// RDV FOR DOCTOR BY YEAR :
 	@GetMapping("/med/rdvbyyear/{year}")
-	List<Rendezvous> rendezvousMedByyear(@Valid @PathVariable long year) {
+	List<Rendezvous> rendezvousMedByyear(@Valid @PathVariable long year) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -696,7 +696,7 @@ public class RdvController {
 	 * Patient : RDV FOR Patient BY DAY :
 	 */
 	@GetMapping("/patient/rdvbyday/{day}")
-	List<Rendezvous> rendezvousPatientByday(@Valid @PathVariable long day) {
+	List<Rendezvous> rendezvousPatientByday(@Valid @PathVariable long day) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -717,7 +717,7 @@ public class RdvController {
 
 	// RDV FOR Patient BY WEEK :
 	@GetMapping("/patient/rdvbyweek/{week}")
-	List<Rendezvous> rendezvousPatientByweek(@Valid @PathVariable long week) {
+	List<Rendezvous> rendezvousPatientByweek(@Valid @PathVariable long week) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -738,7 +738,7 @@ public class RdvController {
 
 	// RDV FOR Patient BY MONTH :
 	@GetMapping("/patient/rdvbymonth/{month}")
-	List<Rendezvous> rendezvousPatientBymonth(@Valid @PathVariable long month) {
+	List<Rendezvous> rendezvousPatientBymonth(@Valid @PathVariable long month) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -759,7 +759,7 @@ public class RdvController {
 
 	// RDV FOR Patient BY YEAR :
 	@GetMapping("/patient/rdvbyyear/{year}")
-	List<Rendezvous> rendezvousPatientByyear(@Valid @PathVariable long year) {
+	List<Rendezvous> rendezvousPatientByyear(@Valid @PathVariable long year) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
@@ -784,7 +784,7 @@ public class RdvController {
 	 */
 	@GetMapping("/patient/rdvbyday/{id}/{day}")
 	List<Rendezvous> rdvforSpecificPatientByday(@Valid @PathVariable long day,
-			@Valid @PathVariable long id) {
+			@Valid @PathVariable long id) throws Exception {
 		activityServices.createActivity(new Date(), "Read", "Consult Rdv for Patient ID : " + id + " By Day ",
 				globalVariables.getConnectedUser());
 		LOGGER.info("Consult Rdv for Patient ID : " + id + " By Day , UserID : "
@@ -796,7 +796,7 @@ public class RdvController {
 	// RDV FOR Patient BY WEEK :and id patient
 	@GetMapping("/patient/rdvbyweek/{id}/{week}")
 	List<Rendezvous> rdvforSpecificPatientByweek(@Valid @PathVariable long week,
-			@Valid @PathVariable long id) {
+			@Valid @PathVariable long id) throws Exception {
 		activityServices.createActivity(new Date(), "Read", "Consult Rdv for Patient ID : " + id + " By Week ",
 				globalVariables.getConnectedUser());
 		LOGGER.info("Consult Rdv for Patient ID : " + id + " By Week , UserID : "
@@ -808,7 +808,7 @@ public class RdvController {
 	// RDV FOR Patient BY MONTH and id patient:
 	@GetMapping("/patient/rdvbymonth/{id}/{month}")
 	List<Rendezvous> rdvforSpecificPatientBymonth(@Valid @PathVariable long month,
-			@Valid @PathVariable long id) {
+			@Valid @PathVariable long id) throws Exception {
 		activityServices.createActivity(new Date(), "Read", "Consult Rdv for Patient ID : " + id + " By Month ",
 				globalVariables.getConnectedUser());
 		LOGGER.info("Consult Rdv for Patient ID : " + id + " By Month , UserID : "
@@ -820,7 +820,7 @@ public class RdvController {
 	// RDV FOR Patient BY YEAR :and id patient
 	@GetMapping("/patient/rdvbyyear/{id}/{year}")
 	List<Rendezvous> rdvforSpecificPatientByyear(@Valid @PathVariable long year,
-			@Valid @PathVariable long id) {
+			@Valid @PathVariable long id) throws Exception {
 		activityServices.createActivity(new Date(), "Read", "Consult Rdv for Patient ID : " + id + " By Year ",
 				globalVariables.getConnectedUser());
 		LOGGER.info("Consult Rdv for Patient ID : " + id + " By Year , UserID : "

@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -114,7 +115,7 @@ public class DocumentController {
 	// Returning a list of documents. %OK%
 	@GetMapping("/documents")
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	Iterable<DocumentResponse> documents() {
+	Iterable<DocumentResponse> documents() throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();
 
@@ -129,7 +130,7 @@ public class DocumentController {
 
 	// Returning a document by id. %OK%
 	@GetMapping("/docById/{id}")
-	public ResponseEntity<DocumentResponse> getDocById(@PathVariable long id) {
+	public ResponseEntity<DocumentResponse> getDocById(@PathVariable long id) throws Exception {
 		Optional<Document> tutorialData = docrepository.findById(id);
 
 		if (tutorialData.isPresent()) {
@@ -146,7 +147,7 @@ public class DocumentController {
 	// Returning a list of documents by patient id. %OK%
 	@PostMapping("/docByIdPatient")
 	@ResponseBody
-	public List<DocumentResponse> findDocByIdPatient(@RequestParam("patient") Long patientId) {
+	public List<DocumentResponse> findDocByIdPatient(@RequestParam("patient") Long patientId) throws Exception {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents Pateint  ID :"+patientId,globalVariables.getConnectedUser());
 		LOGGER.info("Conslting  documents Pateint  ID :"+patientId+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByIdPatient(patientId).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
@@ -155,7 +156,7 @@ public class DocumentController {
 
 	@PostMapping("/docByIdRdv")
 	@ResponseBody
-	public List<DocumentResponse> findDocByIdRdv(@RequestParam Long rdvId) {
+	public List<DocumentResponse> findDocByIdRdv(@RequestParam Long rdvId) throws Exception {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents By Rdv  ID :"+rdvId,globalVariables.getConnectedUser());
 		LOGGER.info("Conslting  documents by RDV ID :"+rdvId+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByIdRendezvous(rdvId).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
@@ -164,7 +165,7 @@ public class DocumentController {
 
 	@GetMapping("/docByNomPatient")
 	@ResponseBody
-	public List<DocumentResponse> findDocByNomPatient(@RequestParam String nomPatient) {
+	public List<DocumentResponse> findDocByNomPatient(@RequestParam String nomPatient) throws Exception {
 		activityServices.createActivity(new Date(),"Read","Conslting  documents Pateint  name :"+nomPatient,globalVariables.getConnectedUser());
 		LOGGER.info("Conslting  documents Pateint  name :"+nomPatient+" By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return docrepository.getDocByNomPatient(nomPatient).stream().map(doc -> mapper.map(doc, DocumentResponse.class))
@@ -209,7 +210,7 @@ public class DocumentController {
 	@GetMapping("/download")
    public ResponseEntity<Resource> getFile
       (@RequestParam String fileName)
-         throws URISyntaxException {
+         throws Exception {
 
       ByteArrayResource resource =
             new ByteArrayResource(azureAdapter
@@ -260,7 +261,7 @@ public class DocumentController {
 	// Returning a list of type documents. %OK%
 	@GetMapping("/typeDocuments")
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	Iterable<TypeDocumentResponse> getTypeDocuments() {
+	Iterable<TypeDocumentResponse> getTypeDocuments() throws Exception {
 		activityServices.createActivity(new Date(),"Read","Consulting All Type  documents",globalVariables.getConnectedUser());
 		LOGGER.info("Consulting All Types  documents By User ID : "+(globalVariables.getConnectedUser() instanceof User ? globalVariables.getConnectedUser().getId():""));
 		return typeDocumentRepo.findAll().stream().map(typeDoc -> mapper.map(typeDoc, TypeDocumentResponse.class))
@@ -294,7 +295,7 @@ public class DocumentController {
 	// A method that returns a list of documents by patient id and medecin %OK% 
 	@GetMapping("/getDocByPatientIdAndMedecin")
 	@ResponseBody
-	public List<DocumentResponse> getDocByPatientIdAndMedecin() {
+	public List<DocumentResponse> getDocByPatientIdAndMedecin() throws Exception {
 
 		// UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 		// 		.getPrincipal();

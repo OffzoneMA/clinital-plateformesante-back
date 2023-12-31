@@ -67,7 +67,7 @@ public class UserController {
 	@PutMapping("{id}")
 	@PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_MEDECIN') or hasRole('ROLE_SECRETAIRE')")
 	public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody User newUser,
-			@PathVariable(value = "id") String email, @CurrentUser UserDetailsImpl currentUser) {
+			@PathVariable(value = "id") String email, @CurrentUser UserDetailsImpl currentUser) throws Exception {
 		User updatedUSer = userService.updateUser(newUser, email, currentUser);
 
 		UserDTO mapped = modelMapper.map(updatedUSer, UserDTO.class);
@@ -79,7 +79,7 @@ public class UserController {
 
 	// A method that resets the password of a user. %ok%
 	@PostMapping("/respw")
-	public ResponseEntity<?> resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> resetPassword(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
 		// UserDetailsImpl userDetails = (UserDetailsImpl)
 		// SecurityContextHolder.getContext().getAuthentication()
 		// .getPrincipal();
